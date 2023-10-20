@@ -5,10 +5,11 @@ import styled from "styled-components";
 export const Nav = styled.nav`
     background: #0033a0;
     height: 85px;
+    width: 100%;
     display: flex;
     position: fixed;
     top: 0;
-    justify-content:
+    justify-content: space-between;
 `;
 
 export const NavLink = styled(Link)`
@@ -20,10 +21,10 @@ export const NavLink = styled(Link)`
     height: 100%;
     cursor: pointer;
     &.active {
-        color: #b58500;
+        color: #d7b75f;
     }
     &:hover {
-        color: #d7b75f;
+        color: #b58500;
     }
 `;
 
@@ -54,7 +55,7 @@ export const NavBtn = styled.nav`
     display: flex;
     align-items: center;
     margin-right: 24px;
-    @media screen & (max-width: 700px) {
+    @media screen and (max-width: 700px) {
         display: none;
     }
 `;
@@ -63,6 +64,7 @@ export const NavBtnLink = styled(Link)`
     border-radius: 10px;
     background: #007dba;
     padding: 10px 22px;
+    text-decoration: none;
     color: #fff8e9;
     outline: none;
     border: none;
@@ -71,7 +73,6 @@ export const NavBtnLink = styled(Link)`
     margin-left: 24px;
     &:hover {
         transition: all 0.15s ease-in-out;
-        background: #71b9dc;
-        color: #b58500;
+        background: #0f628b;
     }
 `;

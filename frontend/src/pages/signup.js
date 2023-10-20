@@ -10,9 +10,17 @@ const SignUp = () => {
                 height: "100vh"
             }}
         >
-            <h1>Sign up!</h1>
-            <input placeholder="Email" type="email"/>
-            <input placeholder="Password"/>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+            >
+                <h1>Sign up!</h1>
+                <input placeholder="Email" type="email"/>
+                <input placeholder="Password"/>
+                <button>Sign Up</button>
+            </div>
         </div>
     );
 };
