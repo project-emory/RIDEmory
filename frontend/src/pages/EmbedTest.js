@@ -5,6 +5,6 @@ export defualt function EmbedTest() {
     return (
         <div className="App">
         <EmbedSocialWidget />
-        <div>
-    )
+        </div>
+    );
 }
