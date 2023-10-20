@@ -50,6 +50,15 @@ export const NavMenu = styled.div`
     }
 `;
 
+export const NavBtn = styled.nav`
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+    @media screen & (max-width: 700px) {
+        display: none;
+    }
+`;
+
 export const NavBtnLink = styled(Link)`
     border-radius: 10px;
     background: #007dba;
