@@ -1,4 +1,5 @@
 # Using/testing the Backend
+mvn spring-boot:run
 
 # Getting Started
 
