@@ -1,36 +1,29 @@
 package com.projectpandas.ridemory.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
+@Document("rides")
 public class Ride {
+    @Id
     private final String id;
+
     private final String messageID;
-    private String to;
-    private String from;
-    private String departTime;
+    private Location to;
+    private Location from;
+    private long departTime;
 
     public Ride() {
-        id = "NULL";
-        messageID = "NULL";
-        to = "NULL";
-        from = "NULL";
-        departTime = "NULL";
-    }
-
-    public Ride(String id,
-            String messageID,
-            String to,
-            String from,
-            String departTime) {
-        this.id = id;
-        this.messageID = messageID;
-        this.to = to;
-        this.from = from;
-        this.departTime = departTime;
+        id = "test";
+        messageID = "test";
+        to = new Location("Hartsfield Jackson");
+        from = new Location("Emory University ATL");
+        departTime = now();
     }
 
     public Ride(String id, String messageID) {
@@ -38,12 +31,40 @@ public class Ride {
         this.messageID = messageID;
     }
 
+    public Ride(String id,
+            String messageID,
+            String to,
+            String from) {
+        this.id = id;
+        this.messageID = messageID;
+        this.to = new Location(to);
+        this.from = new Location(from);
+        this.departTime = now();
+    }
+
+    public Ride(String id,
+            String messageID,
+            String to,
+            String from,
+            long departTime) {
+        this.id = id;
+        this.messageID = messageID;
+        this.to = new Location(to);
+        this.from = new Location(from);
+        this.departTime = departTime;
+    }
+
+    /**
+     * @return current unix epoch time
+     */
+    public static long now() {
+        return System.currentTimeMillis() / 1000L; // get current unix epoch time
+    }
+
     @Override
     public String toString() {
-        return "id: " + id +
-                "\nmessageID: " + messageID +
-                "\nto: " + to +
-                "\nfrom: " + from +
-                "departTime: " + departTime;
+        return String.format(
+                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": \"%s\", \"from\": \"%s\", \"departTime\": %s}",
+                id, messageID, to, from, departTime);
     }
 }
