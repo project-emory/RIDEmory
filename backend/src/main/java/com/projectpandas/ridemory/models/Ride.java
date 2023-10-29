@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @Document("rides")
 public class Ride {
+
     @Id
     private final String id;
 
@@ -29,6 +30,8 @@ public class Ride {
     public Ride(String id, String messageID) {
         this.id = id;
         this.messageID = messageID;
+        to = new Location();
+        from = new Location();
     }
 
     public Ride(String id,
@@ -54,6 +57,29 @@ public class Ride {
         this.departTime = departTime;
     }
 
+    public Ride(String id,
+            String messageID,
+            Location to,
+            Location from) {
+        this.id = id;
+        this.messageID = messageID;
+        this.to = to;
+        this.from = from;
+        this.departTime = now();
+    }
+
+    public Ride(String id,
+            String messageID,
+            Location to,
+            Location from,
+            long departTime) {
+        this.id = id;
+        this.messageID = messageID;
+        this.to = to;
+        this.from = from;
+        this.departTime = departTime;
+    }
+
     /**
      * @return current unix epoch time
      */
@@ -64,7 +90,8 @@ public class Ride {
     @Override
     public String toString() {
         return String.format(
-                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": \"%s\", \"from\": \"%s\", \"departTime\": %s}",
+                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"departTime\": %s}",
                 id, messageID, to, from, departTime);
     }
+
 }

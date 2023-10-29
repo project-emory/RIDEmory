@@ -13,8 +13,6 @@ public class Location {
 
     public Location() {
         name = "test";
-        lat = "Hartsfield Jackson";
-        lng = "Emory University ATL";
     }
 
     public Location(String name) {

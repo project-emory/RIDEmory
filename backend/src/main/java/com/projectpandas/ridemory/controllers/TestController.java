@@ -9,6 +9,7 @@ import com.projectpandas.ridemory.models.Ride;
 
 @RestController
 public class TestController {
+
     @GetMapping("/")
     public String hello() {
         return "Hello world!";
@@ -20,8 +21,9 @@ public class TestController {
     }
 
     @PostMapping("/rides/new")
-    public String createRide(@RequestBody Ride ride) {
+    public Ride createRide(@RequestBody Ride ride) {
         System.out.println(ride);
-        return ride.getId();
+        return ride;
     }
+
 }
