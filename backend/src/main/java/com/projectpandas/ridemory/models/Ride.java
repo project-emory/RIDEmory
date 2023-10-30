@@ -17,6 +17,7 @@ public class Ride {
     private final String messageID;
     private Location to;
     private Location from;
+    private int people = 1;
     private long departTime;
 
     public Ride() {
@@ -24,6 +25,7 @@ public class Ride {
         messageID = "test";
         to = new Location("Hartsfield Jackson");
         from = new Location("Emory University ATL");
+        people = 1;
         departTime = now();
     }
 
@@ -32,6 +34,8 @@ public class Ride {
         this.messageID = messageID;
         to = new Location();
         from = new Location();
+        people = 1;
+        departTime = now();
     }
 
     public Ride(String id,
@@ -90,8 +94,8 @@ public class Ride {
     @Override
     public String toString() {
         return String.format(
-                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"departTime\": %s}",
-                id, messageID, to, from, departTime);
+                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"people\": %s, \"departTime\": %s}",
+                id, messageID, to, from, people, departTime);
     }
 
 }

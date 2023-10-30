@@ -1,20 +1,17 @@
 package com.projectpandas.ridemory;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.projectpandas.ridemory.config.DatabaseProperties;
-import com.projectpandas.ridemory.repository.RideRepository;
-
 @SpringBootApplication
-public class RidemoryApplication {
+public class RidemoryApplication implements CommandLineRunner {
 
-	@Autowired
-	DatabaseProperties dbProperties;
-
-	@Autowired
-	RideRepository rides;
+	@Override
+	public void run(String... args) throws Exception {
+		// Any test code can go here for now
+		// Useful for pre-run processes
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(RidemoryApplication.class, args);
