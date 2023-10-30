@@ -12,10 +12,9 @@ public interface RidesRepository extends MongoRepository<Ride, String> {
     // TODO: add queries
 
     // https://stackoverflow.com/questions/71887036/use-limit-and-skip-in-mongorepositorycustomer-string
-    @Aggregation(pipeline = {
-            "{'skip':?0}",
-            "{'limit':?1}"
-    })
+    @Aggregation("{'$skip':?0}, {'$limit':?1}")
     public List<Ride> listRides(int skip, int limit);
+
+    public Ride deleteRideById(String id);
 
 }

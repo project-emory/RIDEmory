@@ -11,7 +11,7 @@ public class Location {
     // also will need to replace with GeoJSON, see
     // https://www.mongodb.com/docs/manual/geospatial-queries/
     // https://docs.spring.io/spring-data/mongodb/docs/current/api/org/springframework/data/mongodb/core/geo/GeoJsonPoint.html
-    private final String name;
+    private String name;
     private double lat;
     private double lng;
 

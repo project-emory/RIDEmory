@@ -3,21 +3,19 @@ package com.projectpandas.ridemory.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
 @Document("rides")
+@Data
 public class Ride {
 
     @Id
-    private final String id;
+    private String id;
 
-    private final String messageID;
+    private String messageID;
     private Location to;
     private Location from;
-    private int people = 1;
+    private int riders = 1;
     private long departTime;
 
     public Ride() {
@@ -25,7 +23,7 @@ public class Ride {
         messageID = "test";
         to = new Location("Hartsfield Jackson");
         from = new Location("Emory University ATL");
-        people = 1;
+        riders = 1;
         departTime = now();
     }
 
@@ -34,7 +32,7 @@ public class Ride {
         this.messageID = messageID;
         to = new Location();
         from = new Location();
-        people = 1;
+        riders = 1;
         departTime = now();
     }
 
@@ -91,11 +89,15 @@ public class Ride {
         return System.currentTimeMillis() / 1000L; // get current unix epoch time
     }
 
+    public void addRider() {
+        riders++;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"people\": %s, \"departTime\": %s}",
-                id, messageID, to, from, people, departTime);
+                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}",
+                id, messageID, to, from, riders, departTime);
     }
 
 }
