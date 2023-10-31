@@ -1,0 +1,80 @@
+@use "../../assets/scss/" as *;
+
+.footer {
+    display: 'flex';
+    flex-direction: 'row';
+    flex-wrap: 'wrap';
+    justify-content: 'space-between';
+    padding: 5%;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.footer .card ul li {
+    padding-top: 17px;
+    color: $second-color;
+    font-weight: 1px;
+}
+.footer .card ul li a{
+    font-family: $font-family;
+    font-style: $font-style;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    padding-left: 10px;
+    color: $txt-color
+}
+.footer .card .relative {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+.footer .card .relative input {
+    color: $black;
+}
+.footer .card .relative .blue-btn {
+    margin: 0;
+}
+.footer .address, .footer .contact {
+    display: flex;
+    flex-direction: column;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+}
+.footer .address p, .footer .contact p{
+    margin-top: 5px;
+}
+.footer .contact {
+    margin-top: 20px;
+}
+.footer .green-btn {
+    margin-top: 5px;
+    width: 100%;
+}
+
+@media (max-width: 960px) {
+    .footer {
+        display: flex;
+        flex-direction: column;
+    }
+    .footer .card .relative input {
+        margin: 20px 0px;
+    }
+    .footer .card .relative {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 250px) {
+    .footer .card .contact {
+        display: none;
+    }
+    .footer .card .relative{
+        display: none;
+    }
+}
+
+

@@ -1,0 +1,192 @@
+@use "../../assets/scss/" as *;
+
+/* 
+NAVBAR STYLES
+*/
+nav{
+    display: flex;
+    height: 76px;
+    width: 100%;
+    background: $white;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 180px 0px 50px;
+    flex-wrap: wrap;
+    box-shadow: 0px 3px 0px  #E5E5E5;
+    position: fixed;
+  }
+  nav .logo{
+    width: 133px;
+    height: 55px;
+  }
+  nav ul{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+  }
+  nav ul li{
+    margin: 0 5px;
+  }
+  nav ul li a{
+    color: $black;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 0px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  nav ul li a.active,
+  nav ul li a:hover{
+    box-shadow: 0px 3px 0px  $main-color;
+  }
+  
+  .search-box{
+    /* width: 130px; */
+    margin:0px 50px;
+    border-bottom: 1px solid  #989898;
+  }
+  .input-search{
+    height: 30px;
+    width: 102px;
+    border-style: none;
+    /* padding: 10px; */
+    outline: none;
+    transition: all .5s ease-in-out;
+    padding: 0px 5px 0px 15px;
+    color:$black;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    border-radius: 0px;
+    background-color: transparent;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+  }
+  .input-search::placeholder{
+    color:#989898;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .btn-search{
+    width: 28px;
+    height: 15px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    right: 0px;
+    color: #989898;
+    pointer-events: painted;  
+    border-radius: 0px;
+    background-color: transparent;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+  }
+  nav button {
+    border: 2px solid $black;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  nav button {
+    padding: 8px 15px;
+  }
+  nav button.login-btn {
+    background: $white;
+    border-radius: 8px 0px 0px 8px;
+    color: $black
+    
+  }
+  nav button.signup-btn {
+    background: $black;
+    border-radius: 0px 8px 8px 0px;
+    color: $white
+  }
+  nav .menu-btn i{
+    color: $black;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
+  }
+  input[type="checkbox"]{
+    display: none;
+  }
+  @media (max-width: 1000px){
+    nav{
+      padding: 0 40px 0 50px;
+    }
+  }
+  @media (max-width: 1320px) {
+    nav .menu-btn i{
+      display: block;
+    }
+    #click:checked ~ .menu-btn i:before{
+      content: "\f00d";
+    }
+    nav ul{
+      position: fixed;
+      top: 80px;
+      left: -100%;
+      background: $white;
+      height: 100vh;
+      width: 100%;
+      text-align: center;
+      display: block;
+      transition: all 0.3s ease;
+    }
+    #click:checked ~ ul{
+      left: 0;
+    }
+    nav ul li{
+      width: 100%;
+      margin: 20px 0;
+    }
+    nav ul li a{
+      width: 100%;
+      margin-left: -100%;
+      display: block;
+      font-size: 16px;
+      transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    #click:checked ~ ul li a{
+      margin-left: 0px;
+    }
+    nav ul li a.active,
+    nav ul li a:hover{
+      background: none;
+      color:$black;
+      box-shadow: 0px 3px 0px  $main-color;
+    }
+    
+    .search-box{
+      display: none;
+    }
+    
+  }
+  .content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: -1;
+    width: 100%;
+    padding: 0 30px;
+    color: $white;
+  }
+  .content div{
+    font-size: 40px;
+    font-weight: 700;
+  }
+  
