@@ -4,6 +4,8 @@ import Services from "./Services/Services"
 import Contact from "./Contact/Contact"
 import Footer from "./Footer/Footer"
 import Button from "./Ui/Button/Button"
+import Calendar from "./Calendar/Calendar"
+
 export {
     Navbar,
     Header,
@@ -11,4 +13,5 @@ export {
     Contact,
     Footer,
     Button,
+    Calendar
 }
