@@ -1,6 +1,6 @@
 # Notes
 
-Need to run `npm i sass` before running frontend
+Need to run `npm i` before running frontend
 
 # Getting Started with Create React App
 

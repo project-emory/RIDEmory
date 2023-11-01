@@ -1,5 +1,7 @@
-import Home from "./Home";
+import Home from "./Home"
+import Rides from "./Rides"
 
 export { 
-    Home
+    Home,
+    Rides
 }

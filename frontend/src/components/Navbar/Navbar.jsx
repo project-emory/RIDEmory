@@ -3,7 +3,7 @@ import './navbar.scss'
 import {logo} from "../../assets/images"
 import { Link, useNavigate } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = ({ activeLink }) => {
     const navigate = useNavigate()
     return(
         <nav>
@@ -15,13 +15,10 @@ const Navbar = () => {
         <i className="fas fa-bars"></i>
       </label>
       <ul>
-        <li><Link className="active" href="#">HOME</Link></li>
-        <li><Link to="#">ABOUT US</Link></li>
-        <li>
-          <Link to="#">OUR SERVICES 
-          <i className="fas fa-thin fa-chevron-down"></i></Link>
-        </li>
-        <li><Link to="contact">CONTACT US</Link></li>
+        <li onClick={() => navigate("/")}><Link className= { activeLink === "home" ? "active" : ""}>HOME</Link></li>
+        <li onClick={() => navigate("/rides")}><Link className= { activeLink === "rides" ? "active" : ""}>RIDES</Link></li>
+        <li><Link className= { activeLink === "services" ? "active" : ""}>OUR SERVICES <i className="fas fa-thin fa-chevron-down"></i></Link></li>        
+        <li><Link className= { activeLink === "contact" ? "active" : ""}>CONTACT US</Link></li>
         <li>
         <div className="search-box">
           <button className="btn-search"><i className="fas fa-search"></i></button>
