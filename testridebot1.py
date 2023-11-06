@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov  6 10:20:51 2023
-
-@author: alexlucas
-"""
-
 import os
 import requests
 
@@ -15,15 +7,18 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-    return 'You could put any content here you like, perhaps even a homepage for your bot!'
+    return 'Welcome to RIDEmory GroupME Test Bot!'
 
 
 @app.route('/', methods=['POST'])
 def receive():
     print('Incoming message:')
-    
+   # print(data)
+
     # Prevent self-reply
-    
+   # if data['sender_type'] != 'bot':
+     #   if data['text'].startswith('/ping'):
+      #      send(data['name'] + ' pinged me!')
 
     return 'ok', 200
 
