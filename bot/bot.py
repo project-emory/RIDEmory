@@ -7,11 +7,21 @@ from pyngrok import ngrok
 
 app = Flask(__name__)
 app.config["TESTING"] = True
-bot_id = open("secret.txt", "r").read()
+secret = open("secret.txt", "r")
+bot_id = secret.readline()
+user_token = secret.readline()
 
 
 def init_webhooks(base_url):
     pass
+
+
+def update_callback(token, url):
+    json = {"bot": {"callback_url": url}}
+
+    print(
+        requests.post(url="https://api.groupme.com/v3/bots?token=" + token, json=json)
+    )
 
 
 @app.route("/", methods=["GET"])
@@ -23,21 +33,20 @@ def home():
 
 @app.route("/sendmanual", methods=["POST"])
 def sendmanual():
-    send("hi")
-    print(request.get_json())
+    json = request.get_json()
+    send(json["msg"])
     return "ok", 200
 
 
 @app.route("/", methods=["POST"])
 def receive():
     print("Incoming message:")
-    print(request.get_json())
+    json = request.get_json()
 
     # Prevent self-reply
-    if request.data["sender_type"] != "bot":
-        send("received")
-        # if request.data["text"].startswith("/ping"):
-        #     send(request.data["name"] + " pinged me!")
+    if json["sender_type"] != "bot":
+        if json["text"].startswith("/ping"):
+            send(json["name"] + " pinged me!")
 
     return "ok", 200
 
@@ -56,4 +65,5 @@ def send(msg):
 public_url = ngrok.connect(5000).public_url
 print(public_url)
 app.config["BASE_URL"] = public_url
+update_callback(user_token, public_url)
 init_webhooks(public_url)
