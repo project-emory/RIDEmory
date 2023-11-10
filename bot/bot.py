@@ -21,21 +21,23 @@ def home():
     )
 
 
-@app.route("/", methods=["POST"])
+@app.route("/sendmanual", methods=["POST"])
 def sendmanual():
-    send(request.args.get("msg"))
+    send("hi")
+    print(request.get_json())
     return "ok", 200
 
 
 @app.route("/", methods=["POST"])
 def receive():
     print("Incoming message:")
-    print(request.data)
+    print(request.get_json())
 
     # Prevent self-reply
     if request.data["sender_type"] != "bot":
-        if request.data["text"].startswith("/ping"):
-            send(request.data["name"] + " pinged me!")
+        send("received")
+        # if request.data["text"].startswith("/ping"):
+        #     send(request.data["name"] + " pinged me!")
 
     return "ok", 200
 
@@ -48,7 +50,7 @@ def send(msg):
         "text": msg,
     }
 
-    r = requests.post(url, data=data)
+    r = requests.post(url, json=data)
 
 
 public_url = ngrok.connect(5000).public_url
