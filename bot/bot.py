@@ -8,20 +8,21 @@ from pyngrok import ngrok
 app = Flask(__name__)
 app.config["TESTING"] = True
 secret = open("secret.txt", "r")
-bot_id = secret.readline()
-user_token = secret.readline()
+bot_id = secret.readline().rstrip()
+user_token = secret.readline().rstrip()
 
 
 def init_webhooks(base_url):
     pass
 
 
-def update_callback(token, url):
-    json = {"bot": {"callback_url": url}}
+# not possible to update callback
+# def update_callback(token, url):
+#     json = {"bot": {"callback_url": url}}
 
-    print(
-        requests.post(url="https://api.groupme.com/v3/bots?token=" + token, json=json)
-    )
+#     print(
+#         requests.post(url="https://api.groupme.com/v3/bots?token=" + token, json=json)
+#     )
 
 
 @app.route("/", methods=["GET"])
@@ -34,6 +35,7 @@ def home():
 @app.route("/sendmanual", methods=["POST"])
 def sendmanual():
     json = request.get_json()
+    print(bot_id)
     send(json["msg"])
     return "ok", 200
 
@@ -59,11 +61,9 @@ def send(msg):
         "text": msg,
     }
 
-    r = requests.post(url, json=data)
+    requests.post(url, json=data)
 
 
 public_url = ngrok.connect(5000).public_url
 print(public_url)
-app.config["BASE_URL"] = public_url
-update_callback(user_token, public_url)
 init_webhooks(public_url)
