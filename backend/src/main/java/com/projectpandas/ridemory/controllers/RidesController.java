@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectpandas.ridemory.models.Ride;
 import com.projectpandas.ridemory.repositories.RidesRepository;
+import com.projectpandas.ridemory.services.RidesService;
 
 @RestController
 @RequestMapping("/rides")
@@ -26,6 +27,9 @@ public class RidesController {
 
     @Autowired
     RidesRepository rides;
+
+    @Autowired
+    RidesService service;
 
     // CREATE
 
