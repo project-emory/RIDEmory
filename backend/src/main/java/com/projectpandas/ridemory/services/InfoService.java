@@ -38,6 +38,9 @@ public class InfoService {
         CompletableFuture<String> response = client.sendAsync(request, BodyHandlers.ofString())
                 .thenApply(HttpResponse::body);
 
+        // TODO: trim and process response to just return checkpoints and their wait
+        // times
+
         return response;
     }
 }
