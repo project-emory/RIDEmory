@@ -1,46 +1,62 @@
 package com.projectpandas.ridemory.services;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.util.concurrent.CompletableFuture;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InfoService {
-    // TODO: figure out best way to organize the following:
-    // TSA wait times
+    // TODO:
     // Traffic times
     // Uber/Lyft price estimates
     // Transloc
+    // DONE:
+    // ATL TSA wait times
 
     public final HttpClient client;
     public static final String TSAWaitTimeAPI = "https://www.atl.com/times/";
+    public static final String[] checkpoints = { "MAIN", "NORTH", "LOWER NORTH", "SOUTH", "INT'L" };
 
     // @Autowired
     public InfoService() {
         client = HttpClient.newHttpClient();
+
+        // example request code using Http
+        // HttpRequest request = HttpRequest.newBuilder()
+        // .uri(URI.create(TSAWaitTimeAPI))
+        // .GET()
+        // .build();
+
+        // CompletableFuture<String> response = client.sendAsync(request,
+        // BodyHandlers.ofString())
+        // .thenApply(HttpResponse::body);
     }
 
-    public CompletableFuture<String> getTSAWaitTime() {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(TSAWaitTimeAPI))
-                .GET()
-                .build();
+    public Map<String, Integer> getATLWaitTime() {
+        // hard coded, since scraping directly from www.atl.com is specific to ATL
+        // airport
+        // will need to use some other api for general wait times
 
-        CompletableFuture<String> response = client.sendAsync(request, BodyHandlers.ofString())
-                .thenApply(HttpResponse::body);
+        try {
+            Map<String, Integer> times = new HashMap<>();
+            Document doc = Jsoup.connect(TSAWaitTimeAPI).get();
+            Elements els = doc.select("div.row");
 
-        // TODO: trim and process response to just return checkpoints and their wait
-        // times
+            for (int i = 4; i < 9; i++) {
+                String checkpoint = checkpoints[i - 4];
+                Integer wait = Integer.parseInt(els.get(i).select("span").html());
+                times.put(checkpoint, wait);
+            }
 
-        return response;
+            return times;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
