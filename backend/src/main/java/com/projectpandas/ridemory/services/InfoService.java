@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InfoService {
+
     // TODO:
     // Traffic times
     // Uber/Lyft price estimates
@@ -59,4 +60,5 @@ public class InfoService {
             return null;
         }
     }
+
 }

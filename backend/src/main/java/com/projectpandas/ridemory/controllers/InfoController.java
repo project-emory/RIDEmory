@@ -12,6 +12,7 @@ import com.projectpandas.ridemory.services.InfoService;
 @RestController
 @RequestMapping("/info")
 public class InfoController {
+
     @Autowired
     InfoService service;
 
@@ -19,4 +20,5 @@ public class InfoController {
     public Map<String, Integer> getATLWaitTime() {
         return service.getATLWaitTime();
     }
+
 }
