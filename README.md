@@ -44,9 +44,12 @@ RIDEmory is split into three main components:
 ### Features
 
 - **Frontend (WIP)**
+  - [ ] Cohesive, user friendly design
   - [ ] Landing page
   - [ ] Calendar view
   - [ ] Rides list
+  - [ ] Watch for rides at a specific time
+  - [ ] Create a ride request
   - [ ] Responsive mobile-friendly UI
 - **Backend (WIP)**
   - [ ] Compiled Info
@@ -101,7 +104,7 @@ RIDEmory
 
 ### Setup & Testing
 
-See each component's README for specific instructions on running and debugging its code. Note that a working `git` installation is assumed.
+See each component's README for specific instructions on running and debugging its code. Note that a working `git` installation and an already cloned repository is assumed.
 
 ## Miscellaneous
 

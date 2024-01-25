@@ -19,21 +19,15 @@ The brains of the project - communicates with the bot to update the database of 
 ### File Structure
 
 - `src/main/`
-
   - `java/com/projectpanas/ridemory` (API source code)
-
     - `config` (Spring Boot configuration files)
     - `repositories` (MongoDB related files)
     - `controllers`, `models`, `services` (self explanatory, review MVC components)
     - The only loose files in this folder should be `RidemoryApplication.java` and related files that don't fit in any of the other folders
-
   - `resources`
-
     - `static`, `templates` (static resources such as html files go here, we likely will never use this)
     - `application.properties` (general configurations for Spring Boot go here)
-
   - `secrets.properties` (secrets used by the backend go here and are imported as environment variables - _DO NOT COMMIT THESE!_)
-
 - `src/test/java/com/projectpandas/ridemory` (tests for code)
 
 ### Setup
