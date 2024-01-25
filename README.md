@@ -101,7 +101,7 @@ RIDEmory
 
 ### Setup & Testing
 
-See each component's README for specific instructions on running and debugging its code.
+See each component's README for specific instructions on running and debugging its code. Note that a working `git` installation is assumed.
 
 ## Miscellaneous
 
