@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import com.projectpandas.ridemory.models.Ride;
 
@@ -17,4 +18,6 @@ public interface RidesRepository extends MongoRepository<Ride, String> {
 
     public Ride deleteRideById(String id);
 
+    @Query("$or: [ { departTime : { $gte: ?0 - 900 }, { $lte: ?0 + 900 } }, { riders: { $lte: 5 - ?1 } } ]")
+    public List<Ride> getRidesByFilter(long departTime, int riders);
 }

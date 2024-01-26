@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectpandas.ridemory.models.Ride;
@@ -32,40 +33,37 @@ public class RidesController {
     RidesService service;
 
     // CREATE
-
     @PostMapping("/new")
     public Ride createRide(@RequestBody Ride ride) {
-        ride = rides.save(ride);
-        return ride;
+        return service.createRide(ride);
     }
 
     // READ
-
     @GetMapping("/")
     public List<Ride> getRides() {
-        return rides.listRides(0, 10);
+        return service.getRides();
     }
 
     @GetMapping("/{id}")
     public Ride getRide(@PathVariable String id) {
-        return rides.findById(id).orElse(null);
+        return service.getRide(id);
     }
 
     // UPDATE
     @PutMapping("/{id}/addrider")
     public Ride addRider(@PathVariable String id) {
-        Ride ride = rides.findById(id).orElse(null);
-        if (ride != null) {
-            ride.addRider();
-            rides.save(ride);
-        }
-        return ride;
+        return service.addRider(id);
     }
 
     // DELETE
     @DeleteMapping("/remove/{id}")
     public Ride deleteRide(@PathVariable String id) {
-        return rides.deleteRideById(id);
+        return service.deleteRide(id);
     }
 
+    // SEARCH
+    @GetMapping("/search")
+    public List<Ride> searchRides(@RequestParam("departTime") long departTime, @RequestParam("riders") int riders) {
+        return service.searchRides(departTime, riders);
+    }
 }
