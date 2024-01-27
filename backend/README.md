@@ -38,18 +38,18 @@ First, check if you have Java installed by running `java --version`. If it isn't
 
 Next, install Maven. If you are running MacOS or a Linux distro, you can use [homebrew](https://formulae.brew.sh/formula/maven) or your favorite package manager ([apt](https://phoenixnap.com/kb/install-maven-on-ubuntu), [pacman](https://www.atlantic.net/dedicated-server-hosting/how-to-install-apache-maven-on-arch-linux/), etc) respectively. On Windows, the process is more involved, but all you have to do is download the binary from the link above and follow the instructions [here](https://phoenixnap.com/kb/install-maven-windows). Once you have it installed, close and reopen your terminal and run `mvn -V` to check you have it properly installed.
 
-Finally, go to [MongoDB](https://www.mongodb.com/) and create a new account (if you do not have one already) and a new free cluster (M0 Sandbox). Most of the configuration settings don't matter; however, when you are editing your security settings, make sure your password doesn't contain any special characters (`$`, `:`, `/`, `?`, `#`, `[`, `]`, or `@`). If it does, you will have to follow the instructions [here](https://www.mongodb.com/docs/manual/reference/connection-string/) in order to convert it into an acceptable string. (Using a password you don't use for any other accounts would be the most secure, as this password could be accidentally leaked if you force add `secrets.properties` to any commits.)
+Finally, go to [MongoDB](https://www.mongodb.com/) and create a new account (if you do not have one already) and a new free cluster (M0 Sandbox). Most of the configuration settings don't matter; however, when you are editing your security settings, make sure your password doesn't contain any special characters (`$`, `:`, `/`, `?`, `#`, `[`, `]`, or `@`). If it does, you will have to follow the instructions [here](https://www.mongodb.com/docs/manual/reference/connection-string/) in order to convert it into an acceptable string. (**Using a password you don't use for any other accounts would be the most secure**, as this password could be accidentally leaked if you force add `secrets.properties` to any commits.)
 
 Once that is done, go to the "Network Access" tab and add your current IP address. Then, go to the "Deployment" tab in MongoDB, find the "Database Deployment" section on the page, and hit the connect button and then the compass button. Download, install, and open MongoDB Compass, copy the connection string, replace `<password>` with your password, and hit "Save & Connect". If you successfully connect to the cluster, move on; else, double check your password and that there are no extra characters in the connection string.
 
-Now, open the RIDEmory project in your favorite IDE, go to `RIDEmory/backend/src/main/resources/` and create a file called `secrets.properties`. In this file, paste the following:
+Now, open the RIDEmory project in an IDE or your file explorer, go to the `RIDEmory/backend/src/main/resources/` folder and create a file called `secrets.properties`. In this file, paste the following:
 
 ```
 spring.data.mongodb.uri=<connection string goes here>
 spring.data.mongodb.database=ridemory
 ```
 
-and save the file. Now, go to your terminal, navigate to the `backend/` directory, and run `mvn spring-boot:run`. If it launches with no error messages and a new "ridemory" database pops up on the left of MongoDB Compass (make sure you're still connected), you are all set!
+and save the file. Now, go to your terminal, navigate to the `backend/` directory using `cd backend`, and run `mvn spring-boot:run`. If it launches with no error messages and a new "ridemory" database pops up on the left of MongoDB Compass (make sure you're still connected), you are all set!
 
 ### Testing
 
