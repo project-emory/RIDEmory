@@ -48,6 +48,10 @@ public class RidesService {
 
     // SEARCH
     public List<Ride> searchRides(long departTime, int riders) {
-        return rides.getRidesByFilter(departTime, riders);
+        long lowerBoundDepartTime = departTime - 3600000; // 1 hour in milliseconds
+        long upperBoundDepartTime = departTime + 3600000;
+        int riderOccupancy = 5 - riders;
+
+        return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy);
     }
 }
