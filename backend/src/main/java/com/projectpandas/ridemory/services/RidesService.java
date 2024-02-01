@@ -48,7 +48,13 @@ public class RidesService {
     }
 
     // SEARCH
-    public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation, GeoJsonPoint destinLocation) {
+    public List<Ride> searchRides(GeoJsonPoint destineLocation) {
+        double maxDistanceDestination = 200.0; // in meters
+
+        return rides.getRidesByDestination(destineLocation, maxDistanceDestination);
+    }
+
+    public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation, GeoJsonPoint destineLocation) {
         // time filter
         long lowerBoundDepartTime = departTime - 3600000; // 1 hour in milliseconds
         long upperBoundDepartTime = departTime + 3600000;
@@ -57,9 +63,9 @@ public class RidesService {
         int riderOccupancy = 5 - riders;
         
         // location filter
-        double maxDistanceDeparture = 1.0; // in kilometers
-        double maxDistanceArrival = 1.0;
+        double maxDistanceDeparture = 1000.0;
+        double maxDistanceDestination = 1000.0;
 
-        return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy, userLocation, maxDistanceDeparture, destinLocation, maxDistanceArrival);
+        return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy, userLocation, maxDistanceDeparture, destineLocation, maxDistanceDestination);
     }
 }

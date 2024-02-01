@@ -65,17 +65,47 @@ public class RidesController {
     // SEARCH
     @GetMapping("/search")
     public List<Ride> searchRides(
+            @RequestParam("destineCoordinate") String destineCoordinate
+    ) {
+        GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
+
+        return service.searchRides(destineLocation);
+    }
+
+    public List<Ride> searchRides(
             @RequestParam("departTime") long departTime, 
             @RequestParam("riders") int riders,
-            @RequestParam("userLocation") GeoJsonPoint userLocation,
-            @RequestParam("destinLocation") GeoJsonPoint destinLocation
+            @RequestParam("userCoordinate") String userCoordinate,
+            @RequestParam("destineCoordinate") String destineCoordinate
     ) {
-        return service.searchRides(departTime, riders, userLocation, destinLocation);
+        GeoJsonPoint userLocation = convertToPoint(userCoordinate);
+        GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
+            
+        return service.searchRides(departTime, riders, userLocation, destineLocation);
     }
 
     // DELETEALL
     @DeleteMapping("/nuke")
     public void nuke() {
         rides.deleteAll();
+    }
+
+    /*
+        Convert string from url to GeoJsonPoint
+        Used in searchRides()
+     */ 
+    private GeoJsonPoint convertToPoint(String source) {
+        try {
+            String[] coordinates = source.split(",");
+            double lng = Double.parseDouble(coordinates[0].trim());
+            double lat = Double.parseDouble(coordinates[1].trim());
+            GeoJsonPoint point = new GeoJsonPoint(lng, lat);
+            
+            return point;
+        } catch (Exception e) {
+            // Handle conversion exception if needed
+            throw new IllegalArgumentException("Invalid coordinates format: " + source, e);
+        }
+        
     }
 }

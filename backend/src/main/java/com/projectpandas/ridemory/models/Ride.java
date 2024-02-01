@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 
 import lombok.Data;
 
@@ -18,12 +20,18 @@ public class Ride {
     private String messageID;
     private int riders = 1;
     private long departTime;
+
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint to;
+    
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint from;
 
     public Ride() {
         id = "test";
         messageID = "test";
+        to = Locations.NORTH_PARKWAY.getPoint();
+        from = Locations.ATL.getPoint();
         riders = 1;
         departTime = now();
     }
@@ -33,6 +41,8 @@ public class Ride {
         this.messageID = messageID;
         riders = 1;
         departTime = now();
+        to = Locations.NORTH_PARKWAY.getPoint();
+        from = Locations.ATL.getPoint();
     }
 
     public Ride(String id,
@@ -76,7 +86,6 @@ public class Ride {
     public List<Double> getFrom() {
         return from.getCoordinates();
     }
-
 
     @Override
     public String toString() {
