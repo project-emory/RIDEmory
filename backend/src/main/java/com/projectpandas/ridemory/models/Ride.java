@@ -1,7 +1,10 @@
 package com.projectpandas.ridemory.models;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
 import lombok.Data;
 
@@ -13,16 +16,14 @@ public class Ride {
     private String id;
 
     private String messageID;
-    private Location to;
-    private Location from;
     private int riders = 1;
     private long departTime;
+    private GeoJsonPoint to;
+    private GeoJsonPoint from;
 
     public Ride() {
         id = "test";
         messageID = "test";
-        to = new Location("Hartsfield Jackson");
-        from = new Location("Emory University ATL");
         riders = 1;
         departTime = now();
     }
@@ -30,39 +31,14 @@ public class Ride {
     public Ride(String id, String messageID) {
         this.id = id;
         this.messageID = messageID;
-        to = new Location();
-        from = new Location();
         riders = 1;
         departTime = now();
     }
 
     public Ride(String id,
             String messageID,
-            String to,
-            String from) {
-        this.id = id;
-        this.messageID = messageID;
-        this.to = new Location(to);
-        this.from = new Location(from);
-        this.departTime = now();
-    }
-
-    public Ride(String id,
-            String messageID,
-            String to,
-            String from,
-            long departTime) {
-        this.id = id;
-        this.messageID = messageID;
-        this.to = new Location(to);
-        this.from = new Location(from);
-        this.departTime = departTime;
-    }
-
-    public Ride(String id,
-            String messageID,
-            Location to,
-            Location from) {
+            GeoJsonPoint to,
+            GeoJsonPoint from) {
         this.id = id;
         this.messageID = messageID;
         this.to = to;
@@ -72,8 +48,8 @@ public class Ride {
 
     public Ride(String id,
             String messageID,
-            Location to,
-            Location from,
+            GeoJsonPoint to,
+            GeoJsonPoint from,
             long departTime) {
         this.id = id;
         this.messageID = messageID;
@@ -92,6 +68,15 @@ public class Ride {
     public void addRider() {
         riders++;
     }
+
+    public List<Double> getTo() {
+        return to.getCoordinates();
+    }
+
+    public List<Double> getFrom() {
+        return from.getCoordinates();
+    }
+
 
     @Override
     public String toString() {

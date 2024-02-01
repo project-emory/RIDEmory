@@ -3,6 +3,7 @@ package com.projectpandas.ridemory.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,7 +64,18 @@ public class RidesController {
 
     // SEARCH
     @GetMapping("/search")
-    public List<Ride> searchRides(@RequestParam("departTime") long departTime, @RequestParam("riders") int riders) {
-        return service.searchRides(departTime, riders);
+    public List<Ride> searchRides(
+            @RequestParam("departTime") long departTime, 
+            @RequestParam("riders") int riders,
+            @RequestParam("userLocation") GeoJsonPoint userLocation,
+            @RequestParam("destinLocation") GeoJsonPoint destinLocation
+    ) {
+        return service.searchRides(departTime, riders, userLocation, destinLocation);
+    }
+
+    // DELETEALL
+    @DeleteMapping("/nuke")
+    public void nuke() {
+        rides.deleteAll();
     }
 }
