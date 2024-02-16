@@ -20,6 +20,8 @@ public class Ride {
     private String messageID;
     private int riders = 1;
     private long departTime;
+    private String fromString;
+    private String toString;
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint to;

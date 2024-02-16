@@ -63,15 +63,25 @@ public class RidesController {
     }
 
     // SEARCH
-    @GetMapping("/search")
-    public List<Ride> searchRides(
-            @RequestParam("destineCoordinate") String destineCoordinate
+    @GetMapping("/searchByLocation")
+    public List<Ride> searchRidesByLocation(
+            @RequestParam("locationType") int locationType,
+            @RequestParam("locationName") String locationName
     ) {
-        GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
-
-        return service.searchRides(destineLocation);
+        return service.searchRidesByLocation(locationType, locationName);
     }
 
+    @GetMapping("/searchNearLocation")
+    public List<Ride> searchRidesNearLocation(
+            @RequestParam("locationType") int locationType,
+            @RequestParam("locationCoordinate") String locationCoordinate
+    ) {
+        GeoJsonPoint locationPoint = convertToPoint(locationCoordinate);
+
+        return service.searchRidesNearLocation(locationType, locationPoint);
+    }
+
+    @GetMapping("/search")
     public List<Ride> searchRides(
             @RequestParam("departTime") long departTime, 
             @RequestParam("riders") int riders,

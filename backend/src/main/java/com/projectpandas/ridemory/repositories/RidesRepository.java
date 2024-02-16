@@ -17,12 +17,23 @@ public interface RidesRepository extends MongoRepository<Ride, String> {
 
     public Ride deleteRideById(String id);
 
-    // QUERY
+    // QUERY METHODS
+    @Query("{ 'fromString': ?0 }")
+    public List<Ride> getRidesByFrom(String fromString);
+
+    @Query("{ 'toString': ?0 }")
+    public List<Ride> getRidesByTo(String toString);
+
+    @Query("{ 'from': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
+    public List<Ride> getRidesNearUser(
+        GeoJsonPoint userLocation,
+        double maxDistance
+    );
 
     @Query("{ 'to': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
-    public List<Ride> getRidesByDestination(
+    public List<Ride> getRidesNearDestination(
         GeoJsonPoint destineLocation,
-        double maxDistanceDestination
+        double maxDistance
     );
 
     @Query("{" +

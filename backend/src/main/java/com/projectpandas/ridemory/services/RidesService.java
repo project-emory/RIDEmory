@@ -18,6 +18,7 @@ public class RidesService {
     RidesRepository repo;
 
     // CREATE
+    @SuppressWarnings("null")
     public Ride createRide(Ride ride) {
         ride = rides.save(ride);
         return ride;
@@ -28,11 +29,13 @@ public class RidesService {
         return rides.listRides(0, 10);
     }
 
+    @SuppressWarnings("null")
     public Ride getRide(String id) {
         return rides.findById(id).orElse(null);
     }
 
     // UPDATE
+    @SuppressWarnings("null")
     public Ride addRider(String id) {
         Ride ride = rides.findById(id).orElse(null);
         if (ride != null) {
@@ -48,10 +51,26 @@ public class RidesService {
     }
 
     // SEARCH
-    public List<Ride> searchRides(GeoJsonPoint destineLocation) {
-        double maxDistanceDestination = 200.0; // in meters
+    public List<Ride> searchRidesByLocation(int locationType, String locationString) {
+        if (locationType == 0) {
+            // from
+            return rides.getRidesByFrom(locationString);
+        } else {
+            // to
+            return rides.getRidesByTo(locationString);
+        }
+    }
 
-        return rides.getRidesByDestination(destineLocation, maxDistanceDestination);
+    public List<Ride> searchRidesNearLocation(int locationType, GeoJsonPoint locationPoint) {
+        double maxDistance = 200.0; // in meters
+
+        if (locationType == 0) {
+            // from
+            return rides.getRidesNearUser(locationPoint, maxDistance);
+        } else {
+            // to
+            return rides.getRidesNearDestination(locationPoint, maxDistance);
+        }
     }
 
     public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation, GeoJsonPoint destineLocation) {
@@ -63,8 +82,8 @@ public class RidesService {
         int riderOccupancy = 5 - riders;
         
         // location filter
-        double maxDistanceDeparture = 1000.0;
-        double maxDistanceDestination = 1000.0;
+        double maxDistanceDeparture = 200.0;
+        double maxDistanceDestination = 200.0;
 
         return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy, userLocation, maxDistanceDeparture, destineLocation, maxDistanceDestination);
     }
