@@ -21,12 +21,6 @@ import com.projectpandas.ridemory.services.RidesService;
 @RestController
 @RequestMapping("/rides")
 public class RidesController {
-
-    // https://www.digitalocean.com/community/tutorials/spring-requestmapping-requestparam-pathvariable-example
-    // see above for good quick-reference
-    // request parameters:
-    // https://stackoverflow.com/questions/32201441/how-do-i-retrieve-query-parameters-in-a-spring-boot-controller
-
     @Autowired
     RidesRepository rides;
 
@@ -63,6 +57,12 @@ public class RidesController {
     }
 
     // SEARCH
+    /**
+     * Search rides by location
+     * @param   locationType    0 for "from", 1 for "to"
+     * @param   locationName    name of the location
+     * @return  list of rides
+     */
     @GetMapping("/searchByLocation")
     public List<Ride> searchRidesByLocation(
             @RequestParam("locationType") int locationType,
@@ -71,6 +71,12 @@ public class RidesController {
         return service.searchRidesByLocation(locationType, locationName);
     }
 
+    /**
+     * Search rides near a location
+     * @param   locationType        0 for "from", 1 for "to"
+     * @param   locationCoordinate  coordinates of the location
+     * @return  list of rides
+     */
     @GetMapping("/searchNearLocation")
     public List<Ride> searchRidesNearLocation(
             @RequestParam("locationType") int locationType,
@@ -81,6 +87,14 @@ public class RidesController {
         return service.searchRidesNearLocation(locationType, locationPoint);
     }
 
+    /**
+     * Search rides
+     * @param   departTime          time of departure
+     * @param   riders              number of riders
+     * @param   userCoordinate      coordinates of the user
+     * @param   destineCoordinate   coordinates of the destination
+     * @return  list of rides
+     */
     @GetMapping("/search")
     public List<Ride> searchRides(
             @RequestParam("departTime") long departTime, 
@@ -100,10 +114,11 @@ public class RidesController {
         rides.deleteAll();
     }
 
-    /*
-        Convert string from url to GeoJsonPoint
-        Used in searchRides()
-     */ 
+    /**
+     * Convert a string to a GeoJsonPoint
+     * @param   source  string to convert
+     * @return  GeoJsonPoint
+     */
     private GeoJsonPoint convertToPoint(String source) {
         try {
             String[] coordinates = source.split(",");
