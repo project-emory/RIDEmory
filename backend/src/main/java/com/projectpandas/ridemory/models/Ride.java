@@ -70,6 +70,23 @@ public class Ride {
         this.departTime = departTime;
     }
 
+    public Ride(String id,
+            String messageID,
+            GeoJsonPoint to,
+            GeoJsonPoint from,
+            String toString,
+            String fromString,
+            int riders) {
+        this.id = id;
+        this.messageID = messageID;
+        this.to = to;
+        this.from = from;
+        this.toString = toString;
+        this.fromString = fromString;
+        this.riders = riders;
+        this.departTime = now();
+    }
+
     /**
      * @return current unix epoch time
      */

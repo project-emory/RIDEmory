@@ -28,4 +28,12 @@ public enum Locations {
     public GeoJsonPoint getPoint() {
         return point;
     }
+
+    public double getLat() {
+        return point.getX();
+    }
+
+    public double getLon() {
+        return point.getY();
+    }
 }

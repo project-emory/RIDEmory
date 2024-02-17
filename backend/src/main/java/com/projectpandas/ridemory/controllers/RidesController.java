@@ -33,6 +33,13 @@ public class RidesController {
         return service.createRide(ride);
     }
 
+    // CREATE
+    @PostMapping("/generate")
+    public List<Ride> generateRides(@RequestParam("quantity") int quantity) {
+        service.generateRides(quantity);
+        return service.getRides();
+    }
+
     // READ
     @GetMapping("/")
     public List<Ride> getRides() {
@@ -63,8 +70,8 @@ public class RidesController {
      * @param   locationName    name of the location
      * @return  list of rides
      */
-    @GetMapping("/searchByLocation")
-    public List<Ride> searchRidesByLocation(
+    @GetMapping("/searchAt")
+    public List<Ride> searchAt(
             @RequestParam("locationType") int locationType,
             @RequestParam("locationName") String locationName
     ) {
@@ -77,8 +84,8 @@ public class RidesController {
      * @param   locationCoordinate  coordinates of the location
      * @return  list of rides
      */
-    @GetMapping("/searchNearLocation")
-    public List<Ride> searchRidesNearLocation(
+    @GetMapping("/searchNear")
+    public List<Ride> searchNear(
             @RequestParam("locationType") int locationType,
             @RequestParam("locationCoordinate") String locationCoordinate
     ) {
@@ -96,7 +103,7 @@ public class RidesController {
      * @return  list of rides
      */
     @GetMapping("/search")
-    public List<Ride> searchRides(
+    public List<Ride> search(
             @RequestParam("departTime") long departTime, 
             @RequestParam("riders") int riders,
             @RequestParam("userCoordinate") String userCoordinate,

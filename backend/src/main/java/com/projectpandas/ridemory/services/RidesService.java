@@ -1,11 +1,13 @@
 package com.projectpandas.ridemory.services;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
+import com.projectpandas.ridemory.models.Locations;
 import com.projectpandas.ridemory.models.Ride;
 import com.projectpandas.ridemory.repositories.RidesRepository;
 
@@ -22,6 +24,28 @@ public class RidesService {
     public Ride createRide(Ride ride) {
         ride = rides.save(ride);
         return ride;
+    }
+
+    // CREATE
+    public void generateRides(int quantity) {
+        Locations[] locations = Locations.values();
+        int id = 1;
+
+        rides.deleteAll();
+        for (int i = 0; i < quantity; i++) {
+            Locations from = locations[new Random().nextInt(locations.length)];
+            Locations to = locations[new Random().nextInt(locations.length)];
+            GeoJsonPoint fromPoint = new GeoJsonPoint(from.getLat(), from.getLon());
+            GeoJsonPoint toPoint = new GeoJsonPoint(to.getLat(), to.getLon());
+            String fromString = from.name();
+            String toString = to.name();
+            int riders = new Random().nextInt(4) + 1;
+
+            Ride ride = new Ride(id + "", "test", toPoint, fromPoint, toString, fromString, riders);
+
+            rides.save(ride);
+            id++;
+        }
     }
 
     // READ
