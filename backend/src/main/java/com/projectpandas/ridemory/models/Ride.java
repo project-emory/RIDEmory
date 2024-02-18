@@ -98,6 +98,12 @@ public class Ride {
         riders++;
     }
 
+    public void removeRider() {
+        if (riders > 0) {
+            riders--;
+        }
+    }
+
     public List<Double> getTo() {
         return to.getCoordinates();
     }

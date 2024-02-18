@@ -16,9 +16,6 @@ public class RidesService {
     @Autowired
     RidesRepository rides;
 
-    @Autowired
-    RidesRepository repo;
-
     // CREATE
     @SuppressWarnings("null")
     public Ride createRide(Ride ride) {
@@ -69,18 +66,32 @@ public class RidesService {
         return ride;
     }
 
+    // UPDATE
+    @SuppressWarnings("null")
+    public Ride removeRider(String id) {
+        Ride ride = rides.findById(id).orElse(null);
+        if (ride != null) {
+            ride.removeRider();
+            rides.save(ride);
+        }
+        return ride;
+    }
+
     // DELETE
     public Ride deleteRide(String id) {
         return rides.deleteRideById(id);
     }
 
+    // DELETE
+    public void deleteAll() {
+        rides.deleteAll();
+    }
+
     // SEARCH
     public List<Ride> searchRidesByLocation(int locationType, String locationString) {
-        if (locationType == 0) {
-            // from
+        if (locationType == 0) { // from
             return rides.getRidesByFrom(locationString);
-        } else {
-            // to
+        } else { // to
             return rides.getRidesByTo(locationString);
         }
     }
@@ -88,11 +99,9 @@ public class RidesService {
     public List<Ride> searchRidesNearLocation(int locationType, GeoJsonPoint locationPoint) {
         double maxDistance = 200.0; // in meters
 
-        if (locationType == 0) {
-            // from
+        if (locationType == 0) { // from
             return rides.getRidesNearUser(locationPoint, maxDistance);
-        } else {
-            // to
+        } else { // to
             return rides.getRidesNearDestination(locationPoint, maxDistance);
         }
     }

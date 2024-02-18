@@ -57,10 +57,22 @@ public class RidesController {
         return service.addRider(id);
     }
 
+    // UPDATE
+    @PutMapping("/{id}/removerider")
+    public Ride removeRider(@PathVariable String id) {
+        return service.removeRider(id);
+    }
+
     // DELETE
     @DeleteMapping("/remove/{id}")
     public Ride deleteRide(@PathVariable String id) {
         return service.deleteRide(id);
+    }
+
+    // DELETE
+    @DeleteMapping("/nuke")
+    public void nuke() {
+        service.deleteAll();
     }
 
     // SEARCH
@@ -70,7 +82,7 @@ public class RidesController {
      * @param   locationName    name of the location
      * @return  list of rides
      */
-    @GetMapping("/searchAt")
+    @GetMapping("/searchat")
     public List<Ride> searchAt(
             @RequestParam("locationType") int locationType,
             @RequestParam("locationName") String locationName
@@ -84,7 +96,7 @@ public class RidesController {
      * @param   locationCoordinate  coordinates of the location
      * @return  list of rides
      */
-    @GetMapping("/searchNear")
+    @GetMapping("/searchnear")
     public List<Ride> searchNear(
             @RequestParam("locationType") int locationType,
             @RequestParam("locationCoordinate") String locationCoordinate
@@ -113,12 +125,6 @@ public class RidesController {
         GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
             
         return service.searchRides(departTime, riders, userLocation, destineLocation);
-    }
-
-    // DELETEALL
-    @DeleteMapping("/nuke")
-    public void nuke() {
-        rides.deleteAll();
     }
 
     /**
