@@ -1,0 +1,26 @@
+package com.projectpandas.ridemory.models;
+
+public enum Locations {
+
+    // hard coded using plus codes from google maps
+    NORTH_PARKWAY(33.641562, -84.444563),
+    SOUTH_PARKWAY(33.640062, -84.444063),
+    // DOMESTIC, // for domestic just search by north as default
+    INTERNATIONAL(33.640563, -84.418188),
+    RIDESHARE(33.642562, -84.444187),
+    RAOUL_CIRCLE(33.794812, -84.324562),
+    AMUC(33.793813, -84.322563),
+    COMPLEX(33.790437, -84.321438),
+    HARRIS(33.791313, -84.321188),
+    DICKEY(33.792187, -84.325187),
+    DOOLEY(33.797062, -84.310312),
+    STARVINE(33.796312, -84.308688);
+
+    // convert input -> enum using some comparison to each, StringUtils Levenshtein distance
+
+    public final double[] coords;
+
+    private Locations(double lat, double lng) {
+        coords = new double[] { lat, lng };
+    }
+}
