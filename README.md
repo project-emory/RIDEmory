@@ -1,164 +1,147 @@
-# Sample GroupMe Python Bot
-**Python** | [**JavaScript**](https://github.com/groupme/bot-tutorial-nodejs)
+# RIDEmory 🚙
 
-## Introduction
+A self-updating database of ride information for Emory students accessible via the web or GroupMe.
 
-A simple GroupMe bot that reacts to messages sent within a group.
+Currently WIP, watch the repository and check back for updates!
 
-## Contents
+## Table of Contents
 
-  * [Quickly get our sample bot up and running in your groups](#deploy)
-    * Deploy the code to heroku
-    * Create a bot
-    * Configure to your bot's credentials
-  * [Make changes to the bot](#pull)
-    * Pull the code down to your local machine
-    * Configure the local environment variables to your bot's credentials
+- [Vision](#vision)
+  - [Design](#design)
+  - [Features](#features)
+- [Docs](#docs)
+  - [File Structure](#file-structure)
+  - [Setup](#setup)
+  - [Best Practice](#best-practice)
+  - [Testing](#testing)
+- [Miscellaneous](#miscellaneous)
 
-## Requirements:
+## Vision
 
-  * GroupMe account
-  * Heroku account
-  * [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+RIDEmory seeks to **ensure a smoother ride-sharing experience for Emory students.** To do so, we provide:
 
-# Get your bot up and running<a name="deploy"></a>
+- Automatically compiled ride information
+- Easy access to said ride information
+- An updated collection of travel information from TSA wait times to estimated Uber/Lyft rates
 
-## Deploy to Heroku:
+through both a website and a bot in GroupMe.
 
-Be sure to log in to Heroku, using your Heroku credentials, then click the link below.
+### Design
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+RIDEmory is split into three main components:
 
-You should be taken to a page that looks like this:
+- [Frontend](https://github.com/PROJECT-Emory-2023/RIDEmory/tree/main/frontend)
+  - Provides anonymous information about upcoming requested rides on both GroupMe and from registered users
+  - Allows sorting of rides by date, time (both leaving and flight time), location (to/from)
+  - Also provides organized travel information
+- [Backend](https://github.com/PROJECT-Emory-2023/RIDEmory/tree/main/backend)
+  - Does all the heavy lifting, communicating with the bot to update the database of rides
+  - Also compiles travel information and neatly packages it for the frontend
+  - Acts as an interface for most compiled information
+- [Bot](https://github.com/PROJECT-Emory-2023/RIDEmory/tree/main/bot)
+  - Scrapes GroupMe for rideshare information, automatically sending it to the backend
+  - Responds to chat commands for information
+  - Also acts as an interface to GroupMe for things like message likes, user ID, etc
 
-![Deploy to Heroku](http://i.groupme.com/837x662.png.36c63698644a4f61a9ff3d5af91caa5e)
+### Features
 
-Optionally, you can give your app a name, or instead leave it blank and let Heroku name it for you (you can change it later).
+- **Frontend (WIP)**
+  - [ ] Cohesive, user friendly design
+  - [ ] Landing page
+  - [ ] Calendar view
+  - [ ] Rides list
+  - [ ] Watch for rides at a specific time
+  - [ ] Create a ride request
+  - [ ] Responsive mobile-friendly UI
+- **Backend (WIP)**
+  - [ ] Compiled Info
+    - [ ] Traffic times/estimate
+    - [x] ATL TSA wait times
+    - [ ] Uber/Lyft price estimates
+    - [ ] Emory Transportation (Transloc)
+  - [ ] Rideshare Info
+    - [ ] Email sign-on
+    - [ ] Ride filters
+    - [ ] Adding rides through website
+- **Bot (WIP)**
+  - [ ] GroupMe scraping
+  - [ ] GroupMe commands
+  - [ ] DM messaging
+  - [ ] GroupMe/email user connection and preferences
 
-![Success](https://i.groupme.com/959x932.png.85e7959a8a9a41c6b20f5f6b50aceecb)
+## Docs
 
-## Next, create a GroupMe Bot:
+For more specific information on each component, see their respective READMEs (located in their respective directories)
 
-Go to:
-https://dev.groupme.com/session/new
+### File Structure
 
-Use your GroupMe credentials to log into the developer site.
+RIDEmory
 
-![Log into dev.groupme.com](https://i.groupme.com/640x292.png.38c9e590383149c1a01424fc61cdce4e)
+- `backend`
 
-Once you have successfully logged in, go to https://dev.groupme.com/bots/new
+  - `src/main/`
 
-![Create your new bot](http://i.groupme.com/567x373.png.242d18352d7742858cf9a263f597c5d9)
+    - `java/com/projectpanas/ridemory` (API source code)
+      - `config` (Spring Boot configuration files)
+      - `repositories` (MongoDB related files)
+      - `controllers`, `models`, `services` (self explanatory, review MVC components)
+      - The only loose files in this folder should be `RidemoryApplication.java` and related files that don't fit in any of the other folders
+    - `resources`
+      - `static`, `templates` (static resources such as html files go here, we likely will never use this)
+      - `application.properties` (general configurations for Spring Boot go here)
+      - `secrets.properties` (secrets used by the backend go here and are imported as environment variables - _DO NOT COMMIT THESE!_)
 
-Fill out the form to create your new bot:
+  - `src/test/java/com/projectpandas/ridemory` (tests for code)
 
-  * Select the group where you want the bot to live
-  * Give your bot a name
-  * Paste in the URL of your newly deployed Heroku app
-    * `http://your-app-name-here.herokuapp.com/`
-  * (Optional) Give your bot an avatar by providing the URL of an image
-  * Click submit!
+- `bot` (still in development, will be updated as project grows)
 
-## Find your Bot ID:<a name="get-bot-id"></a>
+- `frontend`
+  - `public` (assets not used during compilation such as favicons)
+  - `src` (everything used during compilation)
+    - `api` (code controlling backend communication)
+    - `assets` (assets used during compilation and related exports and styling)
+    - `tests` (tests for various components)
+    - `components`, `pages` (self explanatory, review React, react-router-dom, components, and pages)
+    - There shouldn't be other loose files aside from ones necessary for React to function (such as `App.jsx` or `index.jsx`) here - chances are, any new files could and should go into one of the aforementioned folders
 
-Go here to view all of your bots:
-https://dev.groupme.com/bots
+### Setup
 
-Click on the one you just created.
+See each component's README for specific instructions on setting up its code. This section will be covering general environment setup.
 
-![Select your new bot](http://i.groupme.com/871x333.png.5a33ef2b6ab74ea59d5aaa5569aaaf23)
+For the sake of debugging issues and normalizing the development process across the board, this project will use [VS Code](https://code.visualstudio.com/) as the IDE of choice due to its flexibility and customizability. Feel free to use whatever IDE you are comfortable with - however, I cannot guarantee I can help you with installation or set up.
 
-On your Bot's page, copy the Bot ID
+Firstly, download and install VS Code. Once you have that installed, also install [git](https://git-scm.com/downloads) (for Windows, use the installer; for MacOS, install Xcode; for Linux, check if you already have it installed before using your package manager) and check if it was installed properly by typing in `git --version` to a new terminal window. Restart VS Code if it is running.
 
-![Copy your Bot ID](http://i.groupme.com/615x295.png.3256190e86ed4cd7ae6cf09899c1f9a8)
+Copy this repository's web URL (https://github.com/PROJECT-Emory-2023/RIDEmory.git), and on the new VS Code window, click the "Clone Git Repository..." option and paste the link in the box that pops up, placing the project folder in your desired location (one option would be `~/Documents/Projects`). Open the folder, and you now have the code locally! When you end up trying to push code to the repository on GitHub, you may need to provide git credentials.
 
-## Add your Bot ID to your Heroku app:
+If you happen to need credentials, you will have to create a personal access token on GitHub; go to [Settings > Developer Settings > Tokens > New Personal Access Token](https://github.com/settings/tokens/new) (or just click on the link), change the note to something like "personal-laptop-access," set the expiration (no expiration is most convenient, just make sure you do not share this with anyone), click on the "repo" scope, and finally generate your token. Copy this and make sure you save it somewhere, and when you are next asked to set your git password, paste this key in place of your GitHub password.
 
-Go here to see all of your Heroku apps and select the one you just created before:
+There are a few extensions that will make your life easier, so I would recommend installing them (you can just copy and paste the ID in paranthesis into the extensions search bar in VS Code).
 
-https://dashboard-next.heroku.com/apps
+- Backend
+  - Extension Pack for Java (`vscjava.vscode-java-pack`)
+  - Spring Boot Extension Pack (`vmware.vscode-boot-dev-pack`)
+- Bot
+  - Python (`ms-python.python`)
+  - Pylance (`ms-python.vscode-pylance`)
+- Frontend
+  - Mithril Emmet (`FallenMax.mithril-emmet`)
+  - ES7+ React snippets (`dsznajder.es7-react-js-snippets`)
 
-![Select your heroku app](http://i.groupme.com/920x722.png.46154d6b95f249539c594b129ddb7732)
+And that should be it! If at any point you have questions or run into difficulty (perhaps because I forgot something), reach out for help.
 
-On your app page, click settings in the top navigation:
+### Best Practice
 
-![Go to your app's settings](http://i.groupme.com/722x127.png.27c0a2e83c524064bd41bb66df76d14c)
+Just remember a few things while working on RIDEmory:
 
-On your app's setting page, find the Config Vars section and click the Reveal Config Vars button:
+1. Edit code in a new branch to avoid conflicts by checking out a new branch on the "Source Control" tab of VS Code, naming it `username/feature`. Make sure to publish it - it is now your branch and you have free reign over what you do in it (within reason :)).
+2. Please don't force add any ignored files, as they may contain secrets such as keys and passwords. If you add a new file with secrets, add it to the relevant `.gitignore` file and make a note when you create a pull request.
+3. Don't be afraid to reach out your project leads and other team members are here to support you, so shoot a message in the slack if you have any questions.
 
-![Reveal your environment variables](http://i.groupme.com/606x181.png.94d5157963bc419886e98e038e3195c3)
+### Testing
 
-Then click edit:
+See each component's README for specific instructions on running and debugging its code.
 
-![Edit your environment variables](http://i.groupme.com/796x212.png.b8979454fc4742c7bae688ac67262755)
+## Miscellaneous
 
-Fill out the form to add an environment variable to your app:
-
-  * In the "key" field type: BOT_ID
-  * In the "value" field paste your Bot ID that you copied in the previous steps
-  * Click the save button
-
-![Add the Bot ID environment variable](http://i.groupme.com/784x148.png.5790498a7acd46b289aca2be43e9c84e)
-
-## Now go test your bot!
-
-Go to GroupMe and type "/ping" in the group where your bot lives to see it in action.
-
-![Test your Bot](http://i.groupme.com/821x587.png.7bcf55bed1c64acab83fa2c2ad0b0862)
-
-# Make it your own<a name="pull"></a>
-
-## Pull the code to your local machine
-
-Within terminal, change directory to the location where you would like the files to live, then run this command:
-
-```sh
-heroku git:clone -a YOUR_APP_NAME_HERE
-```
-
-And then change directory into the new folder
-
-```sh
-cd YOUR_APP_NAME_HERE
-```
-
-## Configure your local `BOT_ID` environment variable
-
-You will need to set the `BOT_ID` environment variable so that your bot will know where to send its messages.
-
-If you don't know what your Bot ID is, please refer back to [this](#get-bot-id) section, where it is explained how to retrieve it.
-
-In your terminal, run
-```sh
-export BOT_ID=INSERT_YOUR_BOT_ID_HERE
-```
-You may wish to add this to a file that runs each time you start your shell, such as `~/.bashrc`.
-
-For Heroku, run:
-```sh
-heroku config:set BOT_ID=INSERT_YOUR_BOT_ID_HERE
-```
-
-## Start the server
-
-To test your bot locally, open terminal and install dependencies:
-
-```sh
-pip3 install -r requirements.txt
-```
-
-Then start a local server.
-
-```sh
-FLASK_APP=bot.py flask run
-```
-or use gunicorn to imitate the production Heroku environment:
-```sh
-gunicorn bot:app
-```
-
-Then navigate to `http://localhost:8000` in a browser.
-
-![Local bot](http://i.groupme.com/502x133.png.f06c630467954f5dab4c742dc67b71bf)
-
-## All done! Go play around and make the bot your own.
+Made with ❤️ by the Project Pandas, ©️ Project Emory 2023 under the ⚖️ GNU GPL-3.0 license

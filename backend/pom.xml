@@ -39,7 +39,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+    
 		<dependency>
 			<!-- jsoup HTML parser library @ https://jsoup.org/ -->
 			<groupId>org.jsoup</groupId>
