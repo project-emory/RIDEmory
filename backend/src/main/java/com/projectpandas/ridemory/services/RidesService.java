@@ -34,12 +34,11 @@ public class RidesService {
             Locations to = locations[new Random().nextInt(locations.length)];
             GeoJsonPoint fromPoint = new GeoJsonPoint(from.getLat(), from.getLon());
             GeoJsonPoint toPoint = new GeoJsonPoint(to.getLat(), to.getLon());
-            String fromString = from.name();
-            String toString = to.name();
+            String fromString = from.getName();
+            String toString = to.getName();
             int riders = new Random().nextInt(4) + 1;
 
             Ride ride = new Ride(id + "", "test", toPoint, fromPoint, toString, fromString, riders);
-
             rides.save(ride);
             id++;
         }
