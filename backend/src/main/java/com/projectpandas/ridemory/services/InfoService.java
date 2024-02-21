@@ -1,13 +1,18 @@
 package com.projectpandas.ridemory.services;
 
-import java.net.http.HttpClient;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.projectpandas.ridemory.models.Trip;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class InfoService {
@@ -22,6 +27,7 @@ public class InfoService {
     public final HttpClient client;
     public static final String TSAWaitTimeAPI = "https://www.atl.com/times/";
     public static final String[] checkpoints = { "MAIN", "NORTH", "LOWER NORTH", "SOUTH", "INT'L" };
+    private static final String GoogleMapAPIKEY = "AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs";
 
     // @Autowired
     public InfoService() {
@@ -60,5 +66,26 @@ public class InfoService {
             return null;
         }
     }
+
+    public String  getTrafficTimeEstimate(Trip trip) {
+        GeoJsonPoint origin=trip.getOrigin();
+        GeoJsonPoint destination=trip.getDestination();
+        try{
+            String url="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origin.getX()+","+origin.getY()+ "&destinations="+ destination.getX() + "," + destination.getY() + "&departure_time=now&traffic_model=best_guess&key="+GoogleMapAPIKEY;
+            HttpRequest request=HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                return response.body();
+            } else {
+                System.out.println("Error retrieving traffic time. Status code: " + response.statusCode());
+                return null;
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }
