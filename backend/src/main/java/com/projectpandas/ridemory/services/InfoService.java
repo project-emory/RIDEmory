@@ -1,10 +1,9 @@
 package com.projectpandas.ridemory.services;
 
-import com.projectpandas.ridemory.models.Trip;
+import com.projectpandas.ridemory.models.Ride;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -12,6 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -67,11 +67,13 @@ public class InfoService {
         }
     }
 
-    public String  getTrafficTimeEstimate(Trip trip) {
-        GeoJsonPoint origin=trip.getOrigin();
-        GeoJsonPoint destination=trip.getDestination();
+    public String  getTrafficTimeEstimate(Ride ride) {
+        List<Double> origin=ride.getTo();
+        List<Double> destination=ride.getFrom();
+//        GeoJsonPoint origin=ride.getOrigin();
+//        GeoJsonPoint destination=ride.getDestination();
         try{
-            String url="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origin.getX()+","+origin.getY()+ "&destinations="+ destination.getX() + "," + destination.getY() + "&departure_time=now&traffic_model=best_guess&key="+GoogleMapAPIKEY;
+            String url="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origin.get(0)+","+origin.get(1)+ "&destinations="+ destination.get(0) + "," + destination.get(1) + "&departure_time=now&traffic_model=best_guess&key="+GoogleMapAPIKEY;
             HttpRequest request=HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {

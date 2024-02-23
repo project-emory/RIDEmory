@@ -1,22 +1,15 @@
 package com.projectpandas.ridemory.controllers;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.projectpandas.ridemory.models.Ride;
 import com.projectpandas.ridemory.repositories.RidesRepository;
+import com.projectpandas.ridemory.services.InfoService;
 import com.projectpandas.ridemory.services.RidesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rides")
@@ -26,6 +19,9 @@ public class RidesController {
 
     @Autowired
     RidesService service;
+
+    @Autowired
+    InfoService info;
 
     // CREATE
     @PostMapping("/new")
@@ -44,6 +40,12 @@ public class RidesController {
     @GetMapping("/")
     public List<Ride> getRides() {
         return service.getRides();
+    }
+
+
+    @GetMapping("/atl")
+    public Map<String, Integer> getATLWaitTime() {
+        return info.getATLWaitTime();
     }
 
     @GetMapping("/{id}")
@@ -146,4 +148,5 @@ public class RidesController {
         }
         
     }
+
 }

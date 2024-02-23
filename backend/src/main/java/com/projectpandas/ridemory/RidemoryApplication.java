@@ -1,12 +1,11 @@
 package com.projectpandas.ridemory;
 
+import com.projectpandas.ridemory.models.Ride;
+import com.projectpandas.ridemory.repositories.RidesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.projectpandas.ridemory.models.Ride;
-import com.projectpandas.ridemory.repositories.RidesRepository;
 
 @SpringBootApplication
 public class RidemoryApplication implements CommandLineRunner {
