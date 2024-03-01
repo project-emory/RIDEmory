@@ -117,6 +117,8 @@ public class Ride {
         return from.getCoordinates();
     }
 
+
+
     @Override
     public String toString() {
         return String.format(
