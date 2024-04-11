@@ -1,0 +1,7 @@
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/config/DatabaseProperties.java
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/repositories/RidesRepository.java
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/RidemoryApplication.java
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/controllers/RidesController.java
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/services/RidesService.java
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/models/Locations.java
+/Users/taehoon/Documents/GitHub/RIDEmory/backend/src/main/java/com/projectpandas/ridemory/models/Ride.java

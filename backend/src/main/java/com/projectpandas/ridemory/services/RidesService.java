@@ -32,8 +32,8 @@ public class RidesService {
         for (int i = 0; i < quantity; i++) {
             Locations from = locations[new Random().nextInt(locations.length)];
             Locations to = locations[new Random().nextInt(locations.length)];
-            GeoJsonPoint fromPoint = new GeoJsonPoint(from.getLat(), from.getLon());
-            GeoJsonPoint toPoint = new GeoJsonPoint(to.getLat(), to.getLon());
+            GeoJsonPoint fromPoint = from.getPoint();
+            GeoJsonPoint toPoint = to.getPoint();
             String fromString = from.getName();
             String toString = to.getName();
             int riders = new Random().nextInt(4) + 1;
