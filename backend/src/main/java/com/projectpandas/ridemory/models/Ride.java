@@ -1,14 +1,13 @@
 package com.projectpandas.ridemory.models;
 
-import java.util.List;
-
+import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Data;
+import java.util.List;
 
 @Document("rides")
 @Data
@@ -25,7 +24,7 @@ public class Ride {
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint to;
-    
+
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint from;
 
@@ -104,6 +103,14 @@ public class Ride {
         }
     }
 
+    public GeoJsonPoint getDestination() {
+        return to;
+    }
+
+    public GeoJsonPoint getOrigin() {
+        return from;
+    }
+
     public List<Double> getTo() {
         return to.getCoordinates();
     }
@@ -114,9 +121,9 @@ public class Ride {
 
     @Override
     public String toString() {
-        return String.format(
-                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}",
-                id, messageID, to, from, riders, departTime);
+        return "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}"
+                .formatted(
+                        id, messageID, to, from, riders, departTime);
     }
 
 }
