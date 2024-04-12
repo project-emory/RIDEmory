@@ -5,9 +5,11 @@ const NavBar = () => {
   return (
     <div className = "nav">
       <Logo text={true} />
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <button>Log in</button>
+      <div className = "right">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <button>Log in</button>
+      </div>
       
     </div>
   );
