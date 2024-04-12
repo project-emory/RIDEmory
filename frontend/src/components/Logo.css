@@ -6,8 +6,8 @@
     gap: 15px;
 }
 
-p {
-    color: var(--brand-primary, #013A63);
+.logo-text {
+    color: var(--brand-primary);
     font-family: "Open Sans";
     font-size: 22px;
     font-style: normal;
