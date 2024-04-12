@@ -4,7 +4,7 @@ const Logo = ({ text }) => {
   return (
     <div className="logo">
       <img src="/RIDE.svg" alt="logo" />
-      {text && <p>RIDEmory</p>}
+      {text && <p className="logo-text">RIDEmory</p>}
     </div>
   );
 }
