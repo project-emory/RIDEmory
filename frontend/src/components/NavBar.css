@@ -2,6 +2,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5%;
+    padding: 30px 5vw;   
+    height: 40px;
+    background-color: white;
 }
 
+.right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+}
+
+a {
+    font-family: "Open Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    color: black;
+    text-decoration: none;
+}
+
+button{
+    width: 100px;
+    padding: 10px 0px;
+    border-radius: 30px;
+    background: var(--brand-primary);
+    color: white;
+    border-style: none;
+    font-weight: 700;
+}
