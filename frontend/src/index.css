@@ -40,3 +40,9 @@ p, b {
 b {
   font-weight: 700;
 }
+
+body {
+  background-color: var(--brand-tertiary);
+  padding: none;
+  margin: none;
+}
