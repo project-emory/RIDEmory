@@ -24,7 +24,7 @@ public class Ride {
 
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint to;
-    
+
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint from;
 
@@ -102,10 +102,12 @@ public class Ride {
             riders--;
         }
     }
-    public GeoJsonPoint getDestination(){
+
+    public GeoJsonPoint getDestination() {
         return to;
     }
-    public GeoJsonPoint getOrigin(){
+
+    public GeoJsonPoint getOrigin() {
         return from;
     }
 
@@ -117,13 +119,11 @@ public class Ride {
         return from.getCoordinates();
     }
 
-
-
     @Override
     public String toString() {
-        return String.format(
-                "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}",
-                id, messageID, to, from, riders, departTime);
+        return "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}"
+                .formatted(
+                        id, messageID, to, from, riders, departTime);
     }
 
 }

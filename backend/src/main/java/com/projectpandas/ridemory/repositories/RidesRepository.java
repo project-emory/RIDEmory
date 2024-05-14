@@ -27,31 +27,30 @@ public interface RidesRepository extends MongoRepository<Ride, String> {
 
     @Query("{ 'from': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
     public List<Ride> getRidesNearUser(
-        GeoJsonPoint userLocation,
-        double maxDistance
-    );
+            GeoJsonPoint userLocation,
+            double maxDistance);
 
     @Query("{ 'to': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
     public List<Ride> getRidesNearDestination(
-        GeoJsonPoint destineLocation,
-        double maxDistance
-    );
+            GeoJsonPoint destineLocation,
+            double maxDistance);
 
-    @Query("{" +
-            "   'departTime': { $gte: ?0, $lte: ?1 }," +
-            "   'riders': { $gte: ?2 }," +
-            "   'from': { $near: { $geometry: ?3, $maxDistance: ?4 } }," +
-            "   'to': { $near: { $geometry: ?5, $maxDistance: ?6 } }" +
-            "}")
+    @Query("""
+            {\
+               'departTime': { $gte: ?0, $lte: ?1 },\
+               'riders': { $gte: ?2 },\
+               'from': { $near: { $geometry: ?3, $maxDistance: ?4 } },\
+               'to': { $near: { $geometry: ?5, $maxDistance: ?6 } }\
+            }\
+            """)
     public List<Ride> getRidesByFilter(
-        long lowerBoundDepartTime,
-        long upperBoundDepartTime,
+            long lowerBoundDepartTime,
+            long upperBoundDepartTime,
 
-        int riders,
+            int riders,
 
-        GeoJsonPoint userLocation,
-        double maxDistanceDeparture,
-        GeoJsonPoint destinLocation,
-        double maxDistanceArrival
-    );
+            GeoJsonPoint userLocation,
+            double maxDistanceDeparture,
+            GeoJsonPoint destinLocation,
+            double maxDistanceArrival);
 }

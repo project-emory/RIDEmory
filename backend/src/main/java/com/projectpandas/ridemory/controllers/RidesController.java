@@ -31,7 +31,7 @@ public class RidesController {
 
     // CREATE
     @PostMapping("/generate")
-    public List<Ride> generateRides(@RequestParam("quantity") int quantity) {
+    public List<Ride> generateRides(@RequestParam int quantity) {
         service.generateRides(quantity);
         return service.getRides();
     }
@@ -41,7 +41,6 @@ public class RidesController {
     public List<Ride> getRides() {
         return service.getRides();
     }
-
 
     @GetMapping("/atl")
     public Map<String, Integer> getATLWaitTime() {
@@ -80,29 +79,29 @@ public class RidesController {
     // SEARCH
     /**
      * Search rides by location
-     * @param   locationType    0 for "from", 1 for "to"
-     * @param   locationName    name of the location
-     * @return  list of rides
+     * 
+     * @param locationType 0 for "from", 1 for "to"
+     * @param locationName name of the location
+     * @return list of rides
      */
     @GetMapping("/searchat")
     public List<Ride> searchAt(
-            @RequestParam("locationType") int locationType,
-            @RequestParam("locationName") String locationName
-    ) {
+            @RequestParam int locationType,
+            @RequestParam String locationName) {
         return service.searchRidesByLocation(locationType, locationName);
     }
 
     /**
      * Search rides near a location
-     * @param   locationType        0 for "from", 1 for "to"
-     * @param   locationCoordinate  coordinates of the location
-     * @return  list of rides
+     * 
+     * @param locationType       0 for "from", 1 for "to"
+     * @param locationCoordinate coordinates of the location
+     * @return list of rides
      */
     @GetMapping("/searchnear")
     public List<Ride> searchNear(
-            @RequestParam("locationType") int locationType,
-            @RequestParam("locationCoordinate") String locationCoordinate
-    ) {
+            @RequestParam int locationType,
+            @RequestParam String locationCoordinate) {
         GeoJsonPoint locationPoint = convertToPoint(locationCoordinate);
 
         return service.searchRidesNearLocation(locationType, locationPoint);
@@ -110,29 +109,30 @@ public class RidesController {
 
     /**
      * Search rides
-     * @param   departTime          time of departure
-     * @param   riders              number of riders
-     * @param   userCoordinate      coordinates of the user
-     * @param   destineCoordinate   coordinates of the destination
-     * @return  list of rides
+     * 
+     * @param departTime        time of departure
+     * @param riders            number of riders
+     * @param userCoordinate    coordinates of the user
+     * @param destineCoordinate coordinates of the destination
+     * @return list of rides
      */
     @GetMapping("/search")
     public List<Ride> search(
-            @RequestParam("departTime") long departTime, 
-            @RequestParam("riders") int riders,
-            @RequestParam("userCoordinate") String userCoordinate,
-            @RequestParam("destineCoordinate") String destineCoordinate
-    ) {
+            @RequestParam long departTime,
+            @RequestParam int riders,
+            @RequestParam String userCoordinate,
+            @RequestParam String destineCoordinate) {
         GeoJsonPoint userLocation = convertToPoint(userCoordinate);
         GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
-            
+
         return service.searchRides(departTime, riders, userLocation, destineLocation);
     }
 
     /**
      * Convert a string to a GeoJsonPoint
-     * @param   source  string to convert
-     * @return  GeoJsonPoint
+     * 
+     * @param source string to convert
+     * @return GeoJsonPoint
      */
     private GeoJsonPoint convertToPoint(String source) {
         try {
@@ -140,13 +140,13 @@ public class RidesController {
             double lng = Double.parseDouble(coordinates[0].trim());
             double lat = Double.parseDouble(coordinates[1].trim());
             GeoJsonPoint point = new GeoJsonPoint(lng, lat);
-            
+
             return point;
         } catch (Exception e) {
             // Handle conversion exception if needed
             throw new IllegalArgumentException("Invalid coordinates format: " + source, e);
         }
-        
+
     }
 
 }
