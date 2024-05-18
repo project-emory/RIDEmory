@@ -30,7 +30,7 @@ h2 {
 }
 
 p, b {
-  font-family: Karla;
+  font-family: "Karla";
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -42,7 +42,6 @@ b {
 }
 
 body {
-  background-color: var(--brand-tertiary);
-  padding: none;
-  margin: none;
+  padding: 0px;
+  margin: 0px;
 }

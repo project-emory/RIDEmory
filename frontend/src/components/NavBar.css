@@ -15,20 +15,22 @@
 }
 
 a {
-    font-family: "Open Sans";
+    font-family: "Karla";
     font-size: 18px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 600;
     color: black;
     text-decoration: none;
 }
 
 button{
-    width: 100px;
+    width: 150px;
     padding: 10px 0px;
     border-radius: 30px;
-    background: var(--brand-primary);
-    color: white;
     border-style: none;
     font-weight: 700;
+    background-color: transparent;
+    border-style: solid;
+    font-family: "Karla";
+    border-color: black;
 }
