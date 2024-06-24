@@ -1,4 +1,4 @@
-package com.projectpandas.ridemory.old.config;
+package com.projectpandas.ridemory.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

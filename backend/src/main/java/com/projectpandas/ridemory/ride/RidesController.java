@@ -1,9 +1,7 @@
-package com.projectpandas.ridemory.old.controllers;
+package com.projectpandas.ridemory.ride;
 
-import com.projectpandas.ridemory.old.models.Ride;
-import com.projectpandas.ridemory.old.repositories.RidesRepository;
-import com.projectpandas.ridemory.old.services.InfoService;
-import com.projectpandas.ridemory.old.services.RidesService;
+import com.projectpandas.ridemory.info.InfoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.web.bind.annotation.*;

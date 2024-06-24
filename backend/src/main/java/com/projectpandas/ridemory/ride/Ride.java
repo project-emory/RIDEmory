@@ -1,4 +1,4 @@
-package com.projectpandas.ridemory.old.models;
+package com.projectpandas.ridemory.ride;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

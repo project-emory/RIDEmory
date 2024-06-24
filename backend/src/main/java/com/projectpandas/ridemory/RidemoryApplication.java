@@ -6,8 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
-import com.projectpandas.ridemory.old.repositories.RidesRepository;
-import com.projectpandas.ridemory.old.models.Ride;
+import com.projectpandas.ridemory.ride.Ride;
+import com.projectpandas.ridemory.ride.RidesRepository;
 
 import java.util.Random;
 

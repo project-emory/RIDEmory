@@ -1,7 +1,8 @@
-package com.projectpandas.ridemory.old.util;
+package com.projectpandas.ridemory.util;
 
-import com.projectpandas.ridemory.old.models.Ride;
-import com.projectpandas.ridemory.old.repositories.RidesRepository;
+import com.projectpandas.ridemory.ride.Ride;
+import com.projectpandas.ridemory.ride.RidesRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;

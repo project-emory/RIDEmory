@@ -1,4 +1,4 @@
-package com.projectpandas.ridemory.old.services;
+package com.projectpandas.ridemory.ride;
 
 import java.util.List;
 import java.util.Random;
@@ -6,10 +6,6 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
-
-import com.projectpandas.ridemory.old.models.Locations;
-import com.projectpandas.ridemory.old.models.Ride;
-import com.projectpandas.ridemory.old.repositories.RidesRepository;
 
 @Service
 public class RidesService {

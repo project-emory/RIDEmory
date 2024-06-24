@@ -1,9 +1,9 @@
-package com.projectpandas.ridemory.old.controllers;
+package com.projectpandas.ridemory.info;
 
-import com.projectpandas.ridemory.old.models.Ride;
-import com.projectpandas.ridemory.old.services.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.projectpandas.ridemory.ride.Ride;
 
 import java.util.Map;
 
