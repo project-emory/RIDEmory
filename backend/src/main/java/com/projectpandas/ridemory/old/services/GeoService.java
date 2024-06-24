@@ -1,4 +1,4 @@
-package com.projectpandas.ridemory.services;
+package com.projectpandas.ridemory.old.services;
 
 import org.springframework.stereotype.Service;
 

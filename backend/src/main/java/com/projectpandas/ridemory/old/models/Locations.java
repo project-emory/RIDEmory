@@ -1,4 +1,4 @@
-package com.projectpandas.ridemory.models;
+package com.projectpandas.ridemory.old.models;
 
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 

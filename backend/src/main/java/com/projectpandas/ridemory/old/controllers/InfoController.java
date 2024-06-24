@@ -1,7 +1,7 @@
-package com.projectpandas.ridemory.controllers;
+package com.projectpandas.ridemory.old.controllers;
 
-import com.projectpandas.ridemory.models.Ride;
-import com.projectpandas.ridemory.services.InfoService;
+import com.projectpandas.ridemory.old.models.Ride;
+import com.projectpandas.ridemory.old.services.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/info")
 public class InfoController {
-
 
     @Autowired
     InfoService service;
@@ -24,11 +23,11 @@ public class InfoController {
     public Map<String, Integer> getATLWaitTime() {
         return service.getATLWaitTime();
     }
-    @PostMapping("/duration")
-    public String getTripDuration(@RequestBody Ride ride){
-        return service.getTrafficTimeEstimate(ride);
-//        return service.getTrafficaTimeEstimate(ride);
-    }
 
+    @PostMapping("/duration")
+    public String getTripDuration(@RequestBody Ride ride) {
+        return service.getTrafficTimeEstimate(ride);
+        // return service.getTrafficaTimeEstimate(ride);
+    }
 
 }

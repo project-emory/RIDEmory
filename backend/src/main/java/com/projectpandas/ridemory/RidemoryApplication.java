@@ -1,12 +1,13 @@
 package com.projectpandas.ridemory;
 
-import com.projectpandas.ridemory.models.Ride;
-import com.projectpandas.ridemory.repositories.RidesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+
+import com.projectpandas.ridemory.old.repositories.RidesRepository;
+import com.projectpandas.ridemory.old.models.Ride;
 
 import java.util.Random;
 
@@ -29,6 +30,7 @@ public class RidemoryApplication implements CommandLineRunner {
 		}
 		rides.save(new Ride()); // debugging
 	}
+
 	private Ride generateRandomRide() {
 		Random random = new Random();
 		double latitudeFrom = -90 + random.nextDouble() * 180;
@@ -38,9 +40,8 @@ public class RidemoryApplication implements CommandLineRunner {
 		return new Ride(
 				"test" + random.nextInt(1000),
 				"testMessage" + random.nextInt(1000),
-				new GeoJsonPoint(latitudeFrom,longitudeFrom),
-				new GeoJsonPoint(latitudeTo, longitudeTo)
-		);
+				new GeoJsonPoint(latitudeFrom, longitudeFrom),
+				new GeoJsonPoint(latitudeTo, longitudeTo));
 	}
 
 	public static void main(String[] args) {

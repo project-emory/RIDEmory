@@ -1,4 +1,4 @@
-package com.projectpandas.ridemory.services;
+package com.projectpandas.ridemory.old.services;
 
 import java.util.List;
 import java.util.Random;
@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
-import com.projectpandas.ridemory.models.Locations;
-import com.projectpandas.ridemory.models.Ride;
-import com.projectpandas.ridemory.repositories.RidesRepository;
+import com.projectpandas.ridemory.old.models.Locations;
+import com.projectpandas.ridemory.old.models.Ride;
+import com.projectpandas.ridemory.old.repositories.RidesRepository;
 
 @Service
 public class RidesService {
@@ -106,18 +106,20 @@ public class RidesService {
         }
     }
 
-    public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation, GeoJsonPoint destineLocation) {
+    public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation,
+            GeoJsonPoint destineLocation) {
         // time filter
         long lowerBoundDepartTime = departTime - 3600000; // 1 hour in milliseconds
         long upperBoundDepartTime = departTime + 3600000;
 
         // rider filter
         int riderOccupancy = 5 - riders;
-        
+
         // location filter
         double maxDistanceDeparture = 200.0;
         double maxDistanceDestination = 200.0;
 
-        return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy, userLocation, maxDistanceDeparture, destineLocation, maxDistanceDestination);
+        return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy, userLocation,
+                maxDistanceDeparture, destineLocation, maxDistanceDestination);
     }
 }

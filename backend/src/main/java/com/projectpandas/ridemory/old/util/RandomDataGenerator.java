@@ -1,7 +1,7 @@
-package com.projectpandas.ridemory.util;
+package com.projectpandas.ridemory.old.util;
 
-import com.projectpandas.ridemory.models.Ride;
-import com.projectpandas.ridemory.repositories.RidesRepository;
+import com.projectpandas.ridemory.old.models.Ride;
+import com.projectpandas.ridemory.old.repositories.RidesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -16,14 +16,15 @@ public class RandomDataGenerator {
 
     @Autowired
     RidesRepository rides;
-//    @Override
-//    public void onApplicationEvent(ApplicationReadyEvent event) {
-//        // This method will be invoked when the application is fully started
-//        // Generate random data here
-//        // Example:
-//         generateRandomData();
-//    }
-//
+
+    // @Override
+    // public void onApplicationEvent(ApplicationReadyEvent event) {
+    // // This method will be invoked when the application is fully started
+    // // Generate random data here
+    // // Example:
+    // generateRandomData();
+    // }
+    //
     @EventListener(ApplicationReadyEvent.class)
     private void generateRandomData() {
         // Generate random data logic
@@ -36,6 +37,7 @@ public class RandomDataGenerator {
             }
         }
     }
+
     private Ride generateRandomRide() {
         Random random = new Random();
         double latitudeFrom = -90 + random.nextDouble() * 180;
@@ -45,8 +47,7 @@ public class RandomDataGenerator {
         return new Ride(
                 "test" + random.nextInt(1000),
                 "testMessage" + random.nextInt(1000),
-                new GeoJsonPoint(latitudeFrom,longitudeFrom),
-                new GeoJsonPoint(latitudeTo, longitudeTo)
-        );
+                new GeoJsonPoint(latitudeFrom, longitudeFrom),
+                new GeoJsonPoint(latitudeTo, longitudeTo));
     }
 }

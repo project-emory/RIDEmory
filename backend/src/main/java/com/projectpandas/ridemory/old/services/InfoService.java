@@ -1,7 +1,7 @@
-package com.projectpandas.ridemory.services;
+package com.projectpandas.ridemory.old.services;
 
-import com.projectpandas.ridemory.config.APIKeys;
-import com.projectpandas.ridemory.models.Ride;
+import com.projectpandas.ridemory.old.config.APIKeys;
+import com.projectpandas.ridemory.old.models.Ride;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
