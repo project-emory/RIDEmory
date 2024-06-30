@@ -7,8 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:/secrets.properties")
 public class APIKeys {
-
     @Value("${google.api.key}")
     public static String googleAPIKey;
-
 }

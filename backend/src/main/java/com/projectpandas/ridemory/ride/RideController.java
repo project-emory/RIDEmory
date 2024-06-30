@@ -79,9 +79,9 @@ public class RideController {
      * Search rides by location
      *
      * @param locationType
-     *            0 for "from", 1 for "to"
+     *        0 for "from", 1 for "to"
      * @param locationName
-     *            name of the location
+     *        name of the location
      *
      * @return list of rides
      */
@@ -94,9 +94,9 @@ public class RideController {
      * Search rides near a location
      *
      * @param locationType
-     *            0 for "from", 1 for "to"
+     *        0 for "from", 1 for "to"
      * @param locationCoordinate
-     *            coordinates of the location
+     *        coordinates of the location
      *
      * @return list of rides
      */
@@ -111,13 +111,13 @@ public class RideController {
      * Search rides
      *
      * @param departTime
-     *            time of departure
+     *        time of departure
      * @param riders
-     *            number of riders
+     *        number of riders
      * @param userCoordinate
-     *            coordinates of the user
+     *        coordinates of the user
      * @param destineCoordinate
-     *            coordinates of the destination
+     *        coordinates of the destination
      *
      * @return list of rides
      */
@@ -134,7 +134,7 @@ public class RideController {
      * Convert a string to a GeoJsonPoint
      *
      * @param source
-     *            string to convert
+     *        string to convert
      *
      * @return GeoJsonPoint
      */
@@ -150,7 +150,5 @@ public class RideController {
             // Handle conversion exception if needed
             throw new IllegalArgumentException("Invalid coordinates format: " + source, e);
         }
-
     }
-
 }

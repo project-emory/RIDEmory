@@ -12,7 +12,6 @@ import java.util.List;
 @Document("rides")
 @Data
 public class Ride {
-
     @Id
     private String id;
 
@@ -78,7 +77,8 @@ public class Ride {
      * @return current unix epoch time
      */
     public static long now() {
-        return System.currentTimeMillis() / 1000L; // get current unix epoch time
+        return System.currentTimeMillis() / 1000L; // get current unix epoch
+                                                   // time
     }
 
     public void addRider() {
@@ -112,5 +112,4 @@ public class Ride {
         return "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}"
                 .formatted(id, messageID, to, from, riders, departTime);
     }
-
 }

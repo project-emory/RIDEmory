@@ -13,7 +13,6 @@ import java.util.Random;
 
 @SpringBootApplication
 public class RidemoryApplication implements CommandLineRunner {
-
     @Autowired
     RideRepository rides;
 
@@ -44,5 +43,4 @@ public class RidemoryApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(RidemoryApplication.class, args);
     }
-
 }

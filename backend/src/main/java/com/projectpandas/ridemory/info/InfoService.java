@@ -25,10 +25,9 @@ public class InfoService {
     // Transloc
     // DONE:
     // ATL TSA wait times
-
     public final HttpClient client;
     public static final String TSAWaitTimeAPI = "https://www.atl.com/times/";
-    public static final String[] checkpoints = { "MAIN", "NORTH", "LOWER NORTH", "SOUTH", "INT'L" };
+    public static final String[] checkpoints = {"MAIN", "NORTH", "LOWER NORTH", "SOUTH", "INT'L"};
     private static final String GoogleMapAPIKEY = APIKeys.googleAPIKey;
 
     // @Autowired
@@ -93,5 +92,4 @@ public class InfoService {
             return null;
         }
     }
-
 }

@@ -7,8 +7,6 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:/secrets.properties")
 public class DatabaseProperties {
-
     @Value("${spring.data.mongodb.database}")
     private String dbName;
-
 }

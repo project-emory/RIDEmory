@@ -10,7 +10,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/info")
 public class InfoController {
-
     @Autowired
     InfoService service;
 
@@ -29,5 +28,4 @@ public class InfoController {
         return service.getTrafficTimeEstimate(ride);
         // return service.getTrafficaTimeEstimate(ride);
     }
-
 }
