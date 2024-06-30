@@ -75,12 +75,9 @@ public class InfoService {
         // GeoJsonPoint origin=ride.getOrigin();
         // GeoJsonPoint destination=ride.getDestination();
         try {
-            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-                    + "origins=" + origin.get(0) + "," + origin.get(1)
-                    + "&destinations=" + destination.get(0) + "," + destination.get(1)
-                    + "&departure_time=now"
-                    + "&traffic_model=best_guess"
-                    + "&key=" + GoogleMapAPIKEY;
+            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + "origins=" + origin.get(0) + ","
+                    + origin.get(1) + "&destinations=" + destination.get(0) + "," + destination.get(1)
+                    + "&departure_time=now" + "&traffic_model=best_guess" + "&key=" + GoogleMapAPIKEY;
 
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RidesService {
+public class RideService {
     @Autowired
-    RidesRepository rides;
+    RideRepository rides;
 
     // CREATE
     @SuppressWarnings("null")
