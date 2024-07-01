@@ -1,36 +1,36 @@
 .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 5vw;   
-    height: 40px;
-    background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 5vw;
+  height: 40px;
+  background-color: white;
 }
 
 .right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5vw;
 }
 
 a {
-    font-family: "Karla";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    color: black;
-    text-decoration: none;
+  font-family: "Karla";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
 }
 
-button{
-    width: 150px;
-    padding: 10px 0px;
-    border-radius: 30px;
-    border-style: none;
-    font-weight: 700;
-    background-color: transparent;
-    border-style: solid;
-    font-family: "Karla";
-    border-color: black;
+button {
+  width: 150px;
+  padding: 10px 0px;
+  border-radius: 30px;
+  border-style: none;
+  font-weight: 700;
+  background-color: transparent;
+  border-style: solid;
+  font-family: "Karla";
+  border-color: black;
 }

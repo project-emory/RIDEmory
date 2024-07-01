@@ -3,6 +3,10 @@
 <!--
 If specific project-wide formatting configurations need to be specified, do them here
 Documentation: https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.jdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fjdt%2Fcore%2Fformatter%2Fpackage-summary.html under DefaultCodeFormatterConstants
+
+Example from Google's Java Style Guide: https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml
+
+To enable save on format with VS Code and the Java extension pack, add this file's path when prompted after doing Ctrl+Shift+P -> Java: Open Java Formatter Settings -> Edit (or in settings.json)
 -->
 
 <profiles version="1">

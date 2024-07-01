@@ -1,5 +1,17 @@
-name: Backend Checks
-on: [push]
+name: Backend Actions
+on:
+  push:
+    paths:
+      - "backend/**"
+      - "!frontend/**"
+      - "!bot/**"
+  pull_request:
+    branches:
+      - main
+      - dev
+defaults:
+  run:
+    working-directory: backend
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -10,7 +22,6 @@ jobs:
           java-version: "17"
           distribution: "adopt"
       - run: |
-          cd backend
           mvn formatter:validate --no-transfer-progress
 
   # TODO: build and test jobs for dev/main, deploy for main

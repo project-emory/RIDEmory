@@ -1,53 +1,52 @@
 .profile {
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
-    border-style: solid;
-    width: 575px;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  border-style: solid;
+  width: 575px;
 }
 
 .left {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
 }
 
-
-img{
-    width: 64px;
-    height: 64px;
-    border-radius: 100px;
+img {
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
 }
 
-.userId{
-    width: 24px;
-    height: 24px;
+.userId {
+  width: 24px;
+  height: 24px;
 }
 
 .name {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: none;
 }
 
-.fullName{
-    font-family: "Open Sans";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
+.fullName {
+  font-family: "Open Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
 }
 
-.right .num{
-    font-family: "Open Sans";
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
+.right .num {
+  font-family: "Open Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
 }
 
 .right .str {
-    font-family: "Karla";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
+  font-family: "Karla";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
 }

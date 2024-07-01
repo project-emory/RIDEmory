@@ -1,38 +1,38 @@
 .logo {
-    display: flex; 
-    height: 30px;
-    align-items: center;
-    gap: 12px;
+  display: flex;
+  height: 30px;
+  align-items: center;
+  gap: 12px;
 }
 
 .logo-text {
-    color: var(--brand-primary);
-    font-family: "Open Sans";
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: -0.88px;
+  color: var(--brand-primary);
+  font-family: "Open Sans";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.88px;
 }
 
 .logo img {
-    margin: 0px;
-    padding: 0px;
-  }
-
-.logo .air{
-    width: 21px;
-    height: 24px;
+  margin: 0px;
+  padding: 0px;
 }
 
-.logo .ride{
-    width: 40px;
-    width: 40px;
-    transform: rotate(-10deg);
+.logo .air {
+  width: 21px;
+  height: 24px;
 }
 
-.logo-img{
-    display: flex;
-    justify-content: left;
-    align-items: center;
+.logo .ride {
+  width: 40px;
+  width: 40px;
+  transform: rotate(-10deg);
+}
+
+.logo-img {
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }

@@ -29,7 +29,8 @@ h2 {
   line-height: normal;
 }
 
-p, b {
+p,
+b {
   font-family: "Karla";
   font-size: 18px;
   font-style: normal;
