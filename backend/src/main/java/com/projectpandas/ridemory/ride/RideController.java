@@ -11,12 +11,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/rides")
-public class RidesController {
+public class RideController {
     @Autowired
-    RidesRepository rides;
+    RideRepository rides;
 
     @Autowired
-    RidesService service;
+    RideService service;
 
     @Autowired
     InfoService info;
@@ -77,29 +77,31 @@ public class RidesController {
     // SEARCH
     /**
      * Search rides by location
-     * 
-     * @param locationType 0 for "from", 1 for "to"
-     * @param locationName name of the location
+     *
+     * @param locationType
+     *        0 for "from", 1 for "to"
+     * @param locationName
+     *        name of the location
+     *
      * @return list of rides
      */
     @GetMapping("/searchat")
-    public List<Ride> searchAt(
-            @RequestParam int locationType,
-            @RequestParam String locationName) {
+    public List<Ride> searchAt(@RequestParam int locationType, @RequestParam String locationName) {
         return service.searchRidesByLocation(locationType, locationName);
     }
 
     /**
      * Search rides near a location
-     * 
-     * @param locationType       0 for "from", 1 for "to"
-     * @param locationCoordinate coordinates of the location
+     *
+     * @param locationType
+     *        0 for "from", 1 for "to"
+     * @param locationCoordinate
+     *        coordinates of the location
+     *
      * @return list of rides
      */
     @GetMapping("/searchnear")
-    public List<Ride> searchNear(
-            @RequestParam int locationType,
-            @RequestParam String locationCoordinate) {
+    public List<Ride> searchNear(@RequestParam int locationType, @RequestParam String locationCoordinate) {
         GeoJsonPoint locationPoint = convertToPoint(locationCoordinate);
 
         return service.searchRidesNearLocation(locationType, locationPoint);
@@ -107,19 +109,21 @@ public class RidesController {
 
     /**
      * Search rides
-     * 
-     * @param departTime        time of departure
-     * @param riders            number of riders
-     * @param userCoordinate    coordinates of the user
-     * @param destineCoordinate coordinates of the destination
+     *
+     * @param departTime
+     *        time of departure
+     * @param riders
+     *        number of riders
+     * @param userCoordinate
+     *        coordinates of the user
+     * @param destineCoordinate
+     *        coordinates of the destination
+     *
      * @return list of rides
      */
     @GetMapping("/search")
-    public List<Ride> search(
-            @RequestParam long departTime,
-            @RequestParam int riders,
-            @RequestParam String userCoordinate,
-            @RequestParam String destineCoordinate) {
+    public List<Ride> search(@RequestParam long departTime, @RequestParam int riders,
+            @RequestParam String userCoordinate, @RequestParam String destineCoordinate) {
         GeoJsonPoint userLocation = convertToPoint(userCoordinate);
         GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
 
@@ -128,8 +132,10 @@ public class RidesController {
 
     /**
      * Convert a string to a GeoJsonPoint
-     * 
-     * @param source string to convert
+     *
+     * @param source
+     *        string to convert
+     *
      * @return GeoJsonPoint
      */
     private GeoJsonPoint convertToPoint(String source) {
@@ -144,7 +150,5 @@ public class RidesController {
             // Handle conversion exception if needed
             throw new IllegalArgumentException("Invalid coordinates format: " + source, e);
         }
-
     }
-
 }

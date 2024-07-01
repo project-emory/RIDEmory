@@ -1,5 +1,5 @@
 .logo {
-    display: flex; 
+    display: flex;
     height: 30px;
     align-items: center;
     gap: 12px;
@@ -18,20 +18,20 @@
 .logo img {
     margin: 0px;
     padding: 0px;
-  }
+}
 
-.logo .air{
+.logo .air {
     width: 21px;
     height: 24px;
 }
 
-.logo .ride{
+.logo .ride {
     width: 40px;
     width: 40px;
     transform: rotate(-10deg);
 }
 
-.logo-img{
+.logo-img {
     display: flex;
     justify-content: left;
     align-items: center;

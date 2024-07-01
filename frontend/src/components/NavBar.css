@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 5vw;   
+    padding: 30px 5vw;
     height: 40px;
     background-color: white;
 }
@@ -23,7 +23,7 @@ a {
     text-decoration: none;
 }
 
-button{
+button {
     width: 150px;
     padding: 10px 0px;
     border-radius: 30px;

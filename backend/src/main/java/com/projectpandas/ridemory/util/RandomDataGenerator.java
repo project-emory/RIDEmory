@@ -1,7 +1,7 @@
 package com.projectpandas.ridemory.util;
 
 import com.projectpandas.ridemory.ride.Ride;
-import com.projectpandas.ridemory.ride.RidesRepository;
+import com.projectpandas.ridemory.ride.RideRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -14,9 +14,8 @@ import java.util.Random;
 
 @Component
 public class RandomDataGenerator {
-
     @Autowired
-    RidesRepository rides;
+    RideRepository rides;
 
     // @Override
     // public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -45,10 +44,7 @@ public class RandomDataGenerator {
         double longitudeFrom = -180 + random.nextDouble() * 360;
         double latitudeTo = -90 + random.nextDouble() * 180;
         double longitudeTo = -180 + random.nextDouble() * 360;
-        return new Ride(
-                "test" + random.nextInt(1000),
-                "testMessage" + random.nextInt(1000),
-                new GeoJsonPoint(latitudeFrom, longitudeFrom),
-                new GeoJsonPoint(latitudeTo, longitudeTo));
+        return new Ride("test" + random.nextInt(1000), "testMessage" + random.nextInt(1000),
+                new GeoJsonPoint(latitudeFrom, longitudeFrom), new GeoJsonPoint(latitudeTo, longitudeTo));
     }
 }

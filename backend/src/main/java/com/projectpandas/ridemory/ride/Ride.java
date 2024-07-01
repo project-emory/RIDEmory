@@ -12,7 +12,6 @@ import java.util.List;
 @Document("rides")
 @Data
 public class Ride {
-
     @Id
     private String id;
 
@@ -46,10 +45,7 @@ public class Ride {
         from = Locations.ATL.getPoint();
     }
 
-    public Ride(String id,
-            String messageID,
-            GeoJsonPoint to,
-            GeoJsonPoint from) {
+    public Ride(String id, String messageID, GeoJsonPoint to, GeoJsonPoint from) {
         this.id = id;
         this.messageID = messageID;
         this.to = to;
@@ -57,11 +53,7 @@ public class Ride {
         this.departTime = now();
     }
 
-    public Ride(String id,
-            String messageID,
-            GeoJsonPoint to,
-            GeoJsonPoint from,
-            long departTime) {
+    public Ride(String id, String messageID, GeoJsonPoint to, GeoJsonPoint from, long departTime) {
         this.id = id;
         this.messageID = messageID;
         this.to = to;
@@ -69,12 +61,7 @@ public class Ride {
         this.departTime = departTime;
     }
 
-    public Ride(String id,
-            String messageID,
-            GeoJsonPoint to,
-            GeoJsonPoint from,
-            String toString,
-            String fromString,
+    public Ride(String id, String messageID, GeoJsonPoint to, GeoJsonPoint from, String toString, String fromString,
             int riders) {
         this.id = id;
         this.messageID = messageID;
@@ -90,7 +77,8 @@ public class Ride {
      * @return current unix epoch time
      */
     public static long now() {
-        return System.currentTimeMillis() / 1000L; // get current unix epoch time
+        return System.currentTimeMillis() / 1000L; // get current unix epoch
+                                                   // time
     }
 
     public void addRider() {
@@ -122,8 +110,6 @@ public class Ride {
     @Override
     public String toString() {
         return "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}"
-                .formatted(
-                        id, messageID, to, from, riders, departTime);
+                .formatted(id, messageID, to, from, riders, departTime);
     }
-
 }
