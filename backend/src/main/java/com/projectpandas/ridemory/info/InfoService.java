@@ -18,7 +18,6 @@ import java.util.Map;
 
 @Service
 public class InfoService {
-
     // TODO:
     // Traffic times
     // Uber/Lyft price estimates
@@ -46,7 +45,8 @@ public class InfoService {
     }
 
     public Map<String, Integer> getATLWaitTime() {
-        // hard coded, since scraping directly from www.atl.com is specific to ATL
+        // hard coded, since scraping directly from www.atl.com is specific to
+        // ATL
         // airport
         // will need to use some other api for general wait times
 

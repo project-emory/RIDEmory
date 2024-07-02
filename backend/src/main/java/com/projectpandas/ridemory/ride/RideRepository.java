@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface RideRepository extends MongoRepository<Ride, String> {
-
     // https://stackoverflow.com/questions/71887036/use-limit-and-skip-in-mongorepositorycustomer-string
     @Aggregation("{'$skip':?0} {'$limit':?1}")
     public List<Ride> listRides(int skip, int limit);
