@@ -50,18 +50,6 @@ public class RideController {
         return service.getRide(id);
     }
 
-    // UPDATE
-    @PutMapping("/{id}/addrider")
-    public Ride addRider(@PathVariable String id) {
-        return service.addRider(id);
-    }
-
-    // UPDATE
-    @PutMapping("/{id}/removerider")
-    public Ride removeRider(@PathVariable String id) {
-        return service.removeRider(id);
-    }
-
     // DELETE
     @DeleteMapping("/remove/{id}")
     public Ride deleteRide(@PathVariable String id) {

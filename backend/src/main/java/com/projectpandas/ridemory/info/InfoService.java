@@ -1,6 +1,7 @@
 package com.projectpandas.ridemory.info;
 
 import com.projectpandas.ridemory.config.APIKeys;
+import com.projectpandas.ridemory.ride.Location;
 import com.projectpandas.ridemory.ride.Ride;
 
 import org.jsoup.Jsoup;
@@ -13,7 +14,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -69,13 +69,13 @@ public class InfoService {
     }
 
     public String getTrafficTimeEstimate(Ride ride) {
-        List<Double> origin = ride.getTo();
-        List<Double> destination = ride.getFrom();
+        Location origin = ride.getTo();
+        Location destination = ride.getFrom();
         // GeoJsonPoint origin=ride.getOrigin();
         // GeoJsonPoint destination=ride.getDestination();
         try {
-            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + "origins=" + origin.get(0) + ","
-                    + origin.get(1) + "&destinations=" + destination.get(0) + "," + destination.get(1)
+            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + "origins=" + origin.getLat()
+                    + "," + origin.getLon() + "&destinations=" + destination.getLat() + "," + destination.getLon()
                     + "&departure_time=now" + "&traffic_model=best_guess" + "&key=" + GoogleMapAPIKEY;
 
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();

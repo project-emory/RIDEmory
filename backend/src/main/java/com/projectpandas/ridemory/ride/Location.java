@@ -2,7 +2,7 @@ package com.projectpandas.ridemory.ride;
 
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
-public enum Locations {
+public enum Location {
     // campus
     NORTH_PARKWAY(new GeoJsonPoint(33.641562, -84.444563)), SOUTH_PARKWAY(new GeoJsonPoint(33.640062, -84.444063)),
     RIDESHARE(new GeoJsonPoint(33.642562, -84.444187)), RAOUL_CIRCLE(new GeoJsonPoint(33.794812, -84.324562)),
@@ -15,7 +15,7 @@ public enum Locations {
 
     private final GeoJsonPoint point;
 
-    private Locations(GeoJsonPoint point) {
+    private Location(GeoJsonPoint point) {
         this.point = point;
     }
 
@@ -29,5 +29,14 @@ public enum Locations {
 
     public double getLon() {
         return point.getY();
+    }
+
+    public static Location fromPoint(GeoJsonPoint point) {
+        for (Location loc : Location.values()) {
+            if (loc.getPoint().equals(point)) {
+                return loc;
+            }
+        }
+        return null;
     }
 }

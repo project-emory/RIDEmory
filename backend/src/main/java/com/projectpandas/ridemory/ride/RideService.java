@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
+import com.projectpandas.ridemory.user.User;
+
 @Service
 public class RideService {
     @Autowired
     RideRepository rides;
 
     // CREATE
-    @SuppressWarnings("null")
     public Ride createRide(Ride ride) {
         ride = rides.save(ride);
         return ride;
@@ -21,23 +22,16 @@ public class RideService {
 
     // CREATE
     public void generateRides(int quantity) {
-        Locations[] locations = Locations.values();
-        int id = 1;
+        Location[] locations = Location.values();
 
         rides.deleteAll();
         for (int i = 0; i < quantity; i++) {
-            Locations from = locations[new Random().nextInt(locations.length)];
-            Locations to = locations[new Random().nextInt(locations.length)];
-            GeoJsonPoint fromPoint = new GeoJsonPoint(from.getLat(), from.getLon());
-            GeoJsonPoint toPoint = new GeoJsonPoint(to.getLat(), to.getLon());
-            String fromString = from.name();
-            String toString = to.name();
-            int riders = new Random().nextInt(4) + 1;
+            Location from = locations[new Random().nextInt(locations.length)];
+            Location to = locations[new Random().nextInt(locations.length)];
 
-            Ride ride = new Ride(id + "", "test", toPoint, fromPoint, toString, fromString, riders);
+            Ride ride = new Ride(new User(), to, from);
 
             rides.save(ride);
-            id++;
         }
     }
 
@@ -46,31 +40,8 @@ public class RideService {
         return rides.listRides(0, 10);
     }
 
-    @SuppressWarnings("null")
     public Ride getRide(String id) {
         return rides.findById(id).orElse(null);
-    }
-
-    // UPDATE
-    @SuppressWarnings("null")
-    public Ride addRider(String id) {
-        Ride ride = rides.findById(id).orElse(null);
-        if (ride != null) {
-            ride.addRider();
-            rides.save(ride);
-        }
-        return ride;
-    }
-
-    // UPDATE
-    @SuppressWarnings("null")
-    public Ride removeRider(String id) {
-        Ride ride = rides.findById(id).orElse(null);
-        if (ride != null) {
-            ride.removeRider();
-            rides.save(ride);
-        }
-        return ride;
     }
 
     // DELETE
@@ -105,7 +76,8 @@ public class RideService {
     public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation,
             GeoJsonPoint destineLocation) {
         // time filter
-        long lowerBoundDepartTime = departTime - 3600000; // 1 hour in milliseconds
+        long lowerBoundDepartTime = departTime - 3600000; // 1 hour in
+                                                          // milliseconds
         long upperBoundDepartTime = departTime + 3600000;
 
         // rider filter
