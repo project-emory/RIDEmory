@@ -23,8 +23,18 @@ To enable save on format with VS Code and the Java extension pack, add this file
         <setting id="org.eclipse.jdt.core.formatter.insert_new_line_after_annotation_on_parameter" value="do not insert"/>
         <setting id="org.eclipse.jdt.core.formatter.insert_new_line_after_annotation_on_package" value="insert"/>
         <setting id="org.eclipse.jdt.core.formatter.comment.indent_parameter_description" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.comment.clear_blank_lines_in_javadoc_comment" value="true"/>
         <setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
         <setting id="org.eclipse.jdt.core.formatter.indentation.size" value="4"/>
         <setting id="org.eclipse.jdt.core.formatter.continuation_indentation" value="2"/>
+        <setting id="comment_clear_blank_lines" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.use_on_off_tags" value="true"/>
+        <setting id="comment_format_header" value="true"/>
+        <setting id="comment_indent_parameter_description" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_new_line_in_control_statements" value="do not insert"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_new_line_before_closing_brace_in_array_initializer" value="do not insert"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_new_line_after_opening_brace_in_array_initializer" value="do not insert"/>
+        <setting id="org.eclipse.jdt.core.formatter.put_empty_statement_on_new_line" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.insert_space_after_closing_angle_bracket_in_type_arguments" value="do not insert"/>
     </profile>
 </profiles>

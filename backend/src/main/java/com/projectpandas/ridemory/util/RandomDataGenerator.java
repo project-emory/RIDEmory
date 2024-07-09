@@ -33,10 +33,10 @@ public class RandomDataGenerator {
 
     private Ride generateRandomRide() {
         Random random = new Random();
-        Location to = Location.values()[random.nextInt(Location.values().length)];
-        Location from = Location.values()[random.nextInt(Location.values().length)];
+        Location to = Location.values[random.nextInt(Location.values.length)];
+        Location from = Location.values[random.nextInt(Location.values.length)];
         while (from.equals(to)) {
-            from = Location.values()[random.nextInt(Location.values().length)];
+            from = Location.values[random.nextInt(Location.values.length)];
         }
 
         return new Ride(new User(), to, from);

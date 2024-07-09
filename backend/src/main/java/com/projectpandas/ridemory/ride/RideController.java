@@ -2,6 +2,7 @@ package com.projectpandas.ridemory.ride;
 
 import com.projectpandas.ridemory.info.InfoService;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class RideController {
 
     @GetMapping("/{id}")
     public Ride getRide(@PathVariable String id) {
-        return service.getRide(id);
+        return service.getRide(new ObjectId(id));
     }
 
     // DELETE
@@ -70,7 +71,6 @@ public class RideController {
      *        0 for "from", 1 for "to"
      * @param locationName
      *        name of the location
-     *
      * @return list of rides
      */
     @GetMapping("/searchat")
@@ -85,7 +85,6 @@ public class RideController {
      *        0 for "from", 1 for "to"
      * @param locationCoordinate
      *        coordinates of the location
-     *
      * @return list of rides
      */
     @GetMapping("/searchnear")
@@ -106,7 +105,6 @@ public class RideController {
      *        coordinates of the user
      * @param destineCoordinate
      *        coordinates of the destination
-     *
      * @return list of rides
      */
     @GetMapping("/search")
@@ -123,7 +121,6 @@ public class RideController {
      *
      * @param source
      *        string to convert
-     *
      * @return GeoJsonPoint
      */
     private GeoJsonPoint convertToPoint(String source) {

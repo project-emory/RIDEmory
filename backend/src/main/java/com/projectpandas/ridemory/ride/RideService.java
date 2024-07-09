@@ -3,6 +3,7 @@ package com.projectpandas.ridemory.ride;
 import java.util.List;
 import java.util.Random;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class RideService {
 
     // CREATE
     public void generateRides(int quantity) {
-        Location[] locations = Location.values();
+        Location[] locations = Location.values;
 
         rides.deleteAll();
         for (int i = 0; i < quantity; i++) {
@@ -40,7 +41,7 @@ public class RideService {
         return rides.listRides(0, 10);
     }
 
-    public Ride getRide(String id) {
+    public Ride getRide(ObjectId id) {
         return rides.findById(id).orElse(null);
     }
 

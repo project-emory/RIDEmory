@@ -1,5 +1,6 @@
 package com.projectpandas.ridemory.ride;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RideRepository extends MongoRepository<Ride, String> {
+public interface RideRepository extends MongoRepository<Ride, ObjectId> {
     // https://stackoverflow.com/questions/71887036/use-limit-and-skip-in-mongorepositorycustomer-string
     @Aggregation("{'$skip':?0} {'$limit':?1}")
     public List<Ride> listRides(int skip, int limit);
