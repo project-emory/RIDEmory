@@ -9,12 +9,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectpandas.ridemory.user.User;
+import com.projectpandas.ridemory.util.ObjectIdListSerializer;
 import com.projectpandas.ridemory.util.ObjectIdSerializer;
 
 import java.util.ArrayList;
@@ -39,38 +38,42 @@ public class Ride {
      * security reasons, maybe add custom JsonSerializer that converts to anonymous
      * name. Does NOT include organizer
      */
-    @JsonIgnore
-    @DBRef
-    private List<User> riders;
+    @JsonSerialize(using = ObjectIdListSerializer.class)
+    private List<ObjectId> riders;
     /** See {@link riders}' security note */
-    private User organizer;
+    private ObjectId organizer;
+
+    /** Default constructor for MongoDB */
+    public Ride() {
+        super();
+    }
 
     public Ride(User organizer, Location to, Location from) {
         this.to = to.getPoint();
         this.from = from.getPoint();
         this.riders = new ArrayList<>();
-        this.organizer = organizer;
+        this.organizer = organizer.getId();
         this.departTime = System.currentTimeMillis() / 1000L;
     }
 
-    public List<User> getRiders() {
-        List<User> ridersCopy = new ArrayList<>(riders);
+    public List<ObjectId> getRiders() {
+        List<ObjectId> ridersCopy = new ArrayList<>(riders);
         ridersCopy.add(organizer);
         return ridersCopy;
     }
 
-    public List<User> joinRide(User rider) {
-        if (riders.contains(rider)) {
+    public List<ObjectId> joinRide(User rider) {
+        if (riders.contains(rider.getId())) {
             logger.warn("User {} tried to join {} twice", rider, this);
         } else {
-            riders.add(rider);
+            riders.add(rider.getId());
         }
 
         return getRiders();
     }
 
-    public List<User> leaveRide(User rider) {
-        if (!riders.remove(rider)) {
+    public List<ObjectId> leaveRide(User rider) {
+        if (!riders.remove(rider.getId())) {
             logger.warn("User {} tried to leave {} but was not in it", rider, this);
         }
 

@@ -54,11 +54,10 @@ public class Location {
     }
 
     /**
-     * Perhaps not the most elegant, but if fromPoint() returns null, the location
-     * can be fetched via Google Maps API
+     * Perhaps not the most elegant, but if fromPoint() returns null name, the
+     * location name can be fetched via Google Maps API
      *
-     * @param point
-     *        point to get location from
+     * @param point point to get location from
      * @return location of point
      */
     public static Location fromPoint(GeoJsonPoint point) {
