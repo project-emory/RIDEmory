@@ -1,5 +1,6 @@
 package com.projectpandas.ridemory.ride;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,28 +16,27 @@ public class RideService {
     @Autowired
     RideRepository rides;
 
-    // CREATE
     public Ride createRide(Ride ride) {
         ride = rides.save(ride);
         return ride;
     }
 
-    // CREATE
-    public void generateRides(int quantity) {
+    public List<Ride> generateRides(int quantity) {
         Location[] locations = Location.values;
+        List<Ride> generatedRides = new ArrayList<>();
 
-        rides.deleteAll();
         for (int i = 0; i < quantity; i++) {
             Location from = locations[new Random().nextInt(locations.length)];
             Location to = locations[new Random().nextInt(locations.length)];
 
             Ride ride = new Ride(new User(), to, from);
-
+            generatedRides.add(ride);
             rides.save(ride);
         }
+
+        return generatedRides;
     }
 
-    // READ
     public List<Ride> getRides() {
         return rides.listRides(0, 10);
     }
@@ -45,17 +45,14 @@ public class RideService {
         return rides.findById(id).orElse(null);
     }
 
-    // DELETE
     public Ride deleteRide(String id) {
         return rides.deleteRideById(id);
     }
 
-    // DELETE
     public void deleteAll() {
         rides.deleteAll();
     }
 
-    // SEARCH
     public List<Ride> searchRidesByLocation(int locationType, String locationString) {
         if (locationType == 0) { // from
             return rides.getRidesByFrom(locationString);

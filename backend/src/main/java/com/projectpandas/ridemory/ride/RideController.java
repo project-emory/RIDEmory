@@ -1,69 +1,60 @@
 package com.projectpandas.ridemory.ride;
 
-import com.projectpandas.ridemory.info.InfoService;
-
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/rides")
 public class RideController {
     @Autowired
-    RideRepository rides;
-
+    RideRepository rideRepository;
     @Autowired
-    RideService service;
+    RideService rideService;
 
-    @Autowired
-    InfoService info;
-
-    // CREATE
-    @PostMapping("/new")
-    public Ride createRide(@RequestBody Ride ride) {
-        return service.createRide(ride);
+    /**
+     * Create a ride
+     *
+     * @param ride ride object to create
+     * @return created ride
+     */
+    @PostMapping("/")
+    public ResponseEntity<Ride> createRide(@RequestBody Ride ride) {
+        Ride result = rideService.createRide(ride);
+        return result == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(result);
     }
 
-    // CREATE
-    @PostMapping("/generate")
-    public List<Ride> generateRides(@RequestParam int quantity) {
-        service.generateRides(quantity);
-        return service.getRides();
-    }
-
-    // READ
     @GetMapping("/")
-    public List<Ride> getRides() {
-        return service.getRides();
-    }
-
-    @GetMapping("/atl")
-    public Map<String, Integer> getATLWaitTime() {
-        return info.getATLWaitTime();
+    public ResponseEntity<List<Ride>> getRideRepository() {
+        List<Ride> rides = rideService.getRides();
+        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
     }
 
     @GetMapping("/{id}")
-    public Ride getRide(@PathVariable String id) {
-        return service.getRide(new ObjectId(id));
+    public ResponseEntity<Ride> getRide(@PathVariable String id) {
+        Ride ride = rideService.getRide(new ObjectId(id));
+        return ride == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(ride);
     }
 
-    // DELETE
-    @DeleteMapping("/remove/{id}")
-    public Ride deleteRide(@PathVariable String id) {
-        return service.deleteRide(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRide(@PathVariable String id) {
+        Ride ride = rideService.deleteRide(id);
+        return ride == null ? ResponseEntity.notFound().build() : ResponseEntity.ok().build();
     }
 
-    // DELETE
-    @DeleteMapping("/nuke")
-    public void nuke() {
-        service.deleteAll();
+    @PostMapping("/generate")
+    public ResponseEntity<List<Ride>> generateRides(@RequestParam int quantity) {
+        List<Ride> rides = rideService.generateRides(quantity);
+        return rides == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(rides);
     }
 
-    // SEARCH
+    // TODO: combine search together into one method with query parameters
+    // TODO: clean processing to be more elegant
+
     /**
      * Search rides by location
      *
@@ -72,8 +63,9 @@ public class RideController {
      * @return list of rides
      */
     @GetMapping("/searchat")
-    public List<Ride> searchAt(@RequestParam int locationType, @RequestParam String locationName) {
-        return service.searchRidesByLocation(locationType, locationName);
+    public ResponseEntity<List<Ride>> searchAt(@RequestParam int locationType, @RequestParam String locationName) {
+        List<Ride> rides = rideService.searchRidesByLocation(locationType, locationName);
+        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
     }
 
     /**
@@ -84,10 +76,11 @@ public class RideController {
      * @return list of rides
      */
     @GetMapping("/searchnear")
-    public List<Ride> searchNear(@RequestParam int locationType, @RequestParam String locationCoordinate) {
+    public ResponseEntity<List<Ride>> searchNear(@RequestParam int locationType,
+            @RequestParam String locationCoordinate) {
         GeoJsonPoint locationPoint = convertToPoint(locationCoordinate);
-
-        return service.searchRidesNearLocation(locationType, locationPoint);
+        List<Ride> rides = rideService.searchRidesNearLocation(locationType, locationPoint);
+        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
     }
 
     /**
@@ -95,17 +88,17 @@ public class RideController {
      *
      * @param departTime time of departure
      * @param riders number of riders
-     * @param userCoordinate coordinates of the user
-     * @param destineCoordinate coordinates of the destination
+     * @param fromCoordinate coordinates of the user
+     * @param toCoordinate coordinates of the destination
      * @return list of rides
      */
     @GetMapping("/search")
-    public List<Ride> search(@RequestParam long departTime, @RequestParam int riders,
-            @RequestParam String userCoordinate, @RequestParam String destineCoordinate) {
-        GeoJsonPoint userLocation = convertToPoint(userCoordinate);
-        GeoJsonPoint destineLocation = convertToPoint(destineCoordinate);
-
-        return service.searchRides(departTime, riders, userLocation, destineLocation);
+    public ResponseEntity<List<Ride>> search(@RequestParam long departTime, @RequestParam int riders,
+            @RequestParam String fromCoordinate, @RequestParam String toCoordinate) {
+        GeoJsonPoint from = convertToPoint(fromCoordinate);
+        GeoJsonPoint to = convertToPoint(toCoordinate);
+        List<Ride> rides = rideService.searchRides(departTime, riders, from, to);
+        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
     }
 
     /**
