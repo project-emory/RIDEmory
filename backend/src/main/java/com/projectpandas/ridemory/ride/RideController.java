@@ -2,11 +2,12 @@ package com.projectpandas.ridemory.ride;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/rides")
@@ -28,9 +29,22 @@ public class RideController {
         return result == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(result);
     }
 
+    /**
+     * Search for rides matching the given filters
+     *
+     * @param from starting location in lat,lng format
+     * @param to destination location in lat,lng format
+     * @param radius search radius in meters
+     * @param space minimum number of available seats
+     * @param time time of departure in unix epoch time
+     * @param after true if time is after, false if before
+     * @return list of rides matching filters
+     */
     @GetMapping("/")
-    public ResponseEntity<List<Ride>> getRideRepository() {
-        List<Ride> rides = rideService.getRides();
+    public ResponseEntity<List<Ride>> searchRide(@RequestParam String from, @RequestParam String to,
+            @RequestParam(required = false) Float radius, @RequestParam(required = false) Integer space,
+            @RequestParam(required = false) Long time, @RequestParam(required = false) Boolean after) {
+        List<Ride> rides = rideService.searchRides(from, to, radius, space, time, after);
         return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
     }
 
@@ -44,80 +58,5 @@ public class RideController {
     public ResponseEntity<Void> deleteRide(@PathVariable String id) {
         Ride ride = rideService.deleteRide(id);
         return ride == null ? ResponseEntity.notFound().build() : ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/generate")
-    public ResponseEntity<List<Ride>> generateRides(@RequestParam int quantity) {
-        List<Ride> rides = rideService.generateRides(quantity);
-        return rides == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(rides);
-    }
-
-    // TODO: combine search together into one method with query parameters
-    // TODO: clean processing to be more elegant
-
-    /**
-     * Search rides by location
-     *
-     * @param locationType 0 for "from", 1 for "to"
-     * @param locationName name of the location
-     * @return list of rides
-     */
-    @GetMapping("/searchat")
-    public ResponseEntity<List<Ride>> searchAt(@RequestParam int locationType, @RequestParam String locationName) {
-        List<Ride> rides = rideService.searchRidesByLocation(locationType, locationName);
-        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
-    }
-
-    /**
-     * Search rides near a location
-     *
-     * @param locationType 0 for "from", 1 for "to"
-     * @param locationCoordinate coordinates of the location
-     * @return list of rides
-     */
-    @GetMapping("/searchnear")
-    public ResponseEntity<List<Ride>> searchNear(@RequestParam int locationType,
-            @RequestParam String locationCoordinate) {
-        GeoJsonPoint locationPoint = convertToPoint(locationCoordinate);
-        List<Ride> rides = rideService.searchRidesNearLocation(locationType, locationPoint);
-        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
-    }
-
-    /**
-     * Search rides
-     *
-     * @param departTime time of departure
-     * @param riders number of riders
-     * @param fromCoordinate coordinates of the user
-     * @param toCoordinate coordinates of the destination
-     * @return list of rides
-     */
-    @GetMapping("/search")
-    public ResponseEntity<List<Ride>> search(@RequestParam long departTime, @RequestParam int riders,
-            @RequestParam String fromCoordinate, @RequestParam String toCoordinate) {
-        GeoJsonPoint from = convertToPoint(fromCoordinate);
-        GeoJsonPoint to = convertToPoint(toCoordinate);
-        List<Ride> rides = rideService.searchRides(departTime, riders, from, to);
-        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
-    }
-
-    /**
-     * Convert a string to a GeoJsonPoint
-     *
-     * @param source string to convert
-     * @return GeoJsonPoint
-     */
-    private GeoJsonPoint convertToPoint(String source) {
-        try {
-            String[] coordinates = source.split(",");
-            double lng = Double.parseDouble(coordinates[0].trim());
-            double lat = Double.parseDouble(coordinates[1].trim());
-            GeoJsonPoint point = new GeoJsonPoint(lng, lat);
-
-            return point;
-        } catch (Exception e) {
-            // Handle conversion exception if needed
-            throw new IllegalArgumentException("Invalid coordinates format: " + source, e);
-        }
     }
 }

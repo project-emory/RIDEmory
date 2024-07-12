@@ -31,14 +31,13 @@ public interface RideRepository extends MongoRepository<Ride, ObjectId> {
     public List<Ride> getRidesNearDestination(GeoJsonPoint destineLocation, double maxDistance);
 
     @Query("""
-            {\
-                'departTime': { $gte: ?0, $lte: ?1 },\
-                'riders': { $gte: ?2 },\
-                'from': { $near: { $geometry: ?3, $maxDistance: ?4 } },\
-                'to': { $near: { $geometry: ?5, $maxDistance: ?6 } }\
-            }\
+            {
+                'departTime': { $expr: { $cond: [?5, { $gte: ['$departTime', ?4] }, { $lte: ['$departTime', ?4] }] } },
+                $expr: { $lte: [{ $add: [{ $size: '$riders' }, 1] }, { $subtract: [5, ?3] }] },
+                'from': { $near: { $geometry: ?0, $maxDistance: ?2 } },
+                'to': { $near: { $geometry: ?1, $maxDistance: ?2 } }
+            }
             """)
-    public List<Ride> getRidesByFilter(long lowerBoundDepartTime, long upperBoundDepartTime, int riders,
-            GeoJsonPoint userLocation, double maxDistanceDeparture, GeoJsonPoint destinLocation,
-            double maxDistanceArrival);
+    public List<Ride> getRidesByFilter(GeoJsonPoint fromPoint, GeoJsonPoint toPoint, double radius, int space,
+            long time, boolean after);
 }

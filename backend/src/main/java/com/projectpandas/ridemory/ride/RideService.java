@@ -8,16 +8,20 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.projectpandas.ridemory.user.User;
 
 @Service
 public class RideService {
     @Autowired
-    RideRepository rides;
+    RideRepository rideRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(RideService.class);
 
     public Ride createRide(Ride ride) {
-        ride = rides.save(ride);
+        ride = rideRepository.save(ride);
         return ride;
     }
 
@@ -31,61 +35,67 @@ public class RideService {
 
             Ride ride = new Ride(new User(), to, from);
             generatedRides.add(ride);
-            rides.save(ride);
+            rideRepository.save(ride);
         }
 
         return generatedRides;
     }
 
-    public List<Ride> getRides() {
-        return rides.listRides(0, 10);
+    public List<Ride> getRideRepository() {
+        return rideRepository.listRides(0, 10);
     }
 
     public Ride getRide(ObjectId id) {
-        return rides.findById(id).orElse(null);
+        return rideRepository.findById(id).orElse(null);
     }
 
     public Ride deleteRide(String id) {
-        return rides.deleteRideById(id);
+        return rideRepository.deleteRideById(id);
     }
 
     public void deleteAll() {
-        rides.deleteAll();
+        rideRepository.deleteAll();
     }
 
-    public List<Ride> searchRidesByLocation(int locationType, String locationString) {
-        if (locationType == 0) { // from
-            return rides.getRidesByFrom(locationString);
-        } else { // to
-            return rides.getRidesByTo(locationString);
+    /**
+     * Search for rides matching the given filters
+     *
+     * @param from starting location in lat,lng format
+     * @param to destination location in lat,lng format
+     * @param radius search radius in meters (default exact search)
+     * @param space minimum number of available seats (default 1)
+     * @param time time of departure in unix epoch time (default present)
+     * @param after true if time is after, false if before (default true)
+     * @return list of rides matching the filters
+     */
+    public List<Ride> searchRides(String from, String to, Float radius, Integer space, Long time, Boolean after) {
+        GeoJsonPoint fromPoint = convertToPoint(from);
+        GeoJsonPoint toPoint = convertToPoint(to);
+        radius = radius == null ? 0 : radius;
+        space = space == null ? 1 : space;
+        time = time == null ? System.currentTimeMillis() / 1000L : time;
+        after = after == null ? true : after;
+
+        return rideRepository.getRidesByFilter(fromPoint, toPoint, radius, space, time, after);
+    }
+
+    /**
+     * Convert a string to a GeoJsonPoint
+     *
+     * @param source string to convert in lat,lng format
+     * @return GeoJsonPoint
+     */
+    private GeoJsonPoint convertToPoint(String source) {
+        try {
+            String[] coordinates = source.split(",");
+            double lng = Double.parseDouble(coordinates[0].trim());
+            double lat = Double.parseDouble(coordinates[1].trim());
+            return new GeoJsonPoint(lng, lat);
+        } catch (Exception e) {
+            logger.error(source + " is an invalid coordinate format! Expected source to be `latitude,longitude` pair.",
+                    new IllegalArgumentException());
         }
-    }
 
-    public List<Ride> searchRidesNearLocation(int locationType, GeoJsonPoint locationPoint) {
-        double maxDistance = 200.0; // in meters
-
-        if (locationType == 0) { // from
-            return rides.getRidesNearUser(locationPoint, maxDistance);
-        } else { // to
-            return rides.getRidesNearDestination(locationPoint, maxDistance);
-        }
-    }
-
-    public List<Ride> searchRides(long departTime, int riders, GeoJsonPoint userLocation,
-            GeoJsonPoint destineLocation) {
-        // time filter
-        long lowerBoundDepartTime = departTime - 3600000; // 1 hour in
-                                                          // milliseconds
-        long upperBoundDepartTime = departTime + 3600000;
-
-        // rider filter
-        int riderOccupancy = 5 - riders;
-
-        // location filter
-        double maxDistanceDeparture = 200.0;
-        double maxDistanceDestination = 200.0;
-
-        return rides.getRidesByFilter(lowerBoundDepartTime, upperBoundDepartTime, riderOccupancy, userLocation,
-                maxDistanceDeparture, destineLocation, maxDistanceDestination);
+        return null;
     }
 }
