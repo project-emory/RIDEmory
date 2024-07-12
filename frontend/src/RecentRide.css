@@ -1,0 +1,28 @@
+.ride-container {
+    display: flex;
+    justify-content: space-between; /* Distribute space between the two main parts */
+    align-items: center;
+    width: 400px; /* Set a fixed width for each ride container */
+    height: 40px;
+}
+
+.ride-info {
+    flex: 1;
+}
+
+.ride-details {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.ride-details img {
+    width: 20px; /* Fixed width for silhouette icon */
+    height: 20px; /* Fixed height for silhouette icon */
+
+}
+
+.ride-details p {
+    text-align: right; 
+    margin-left: 25px;
+}
