@@ -1,0 +1,32 @@
+.content-container {
+    display: flex;
+    flex-direction: row;
+    margin: 50px 200px 0 300px;
+}
+
+.top-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+}
+
+.bottom-section {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-top: 20px;
+}
+
+.user-profile {
+    margin-bottom: 20px;
+}
+
+.user-profile,
+.recent-rides {
+    flex: 1;
+    margin-left: 60px;;
+}
+
+.connected-accounts {
+    margin-right: 20px;
+}
