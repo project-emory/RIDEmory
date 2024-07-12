@@ -19,10 +19,9 @@
 .ride-details img {
     width: 20px; /* Fixed width for silhouette icon */
     height: 20px; /* Fixed height for silhouette icon */
-
 }
 
 .ride-details p {
-    text-align: right; 
+    text-align: right;
     margin-left: 25px;
 }

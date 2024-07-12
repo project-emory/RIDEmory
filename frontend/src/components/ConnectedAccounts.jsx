@@ -1,10 +1,10 @@
 import SocialListItem from "./SocialListItem";
 
-const ConnectedAccounts = ( { socials } ) => {
-    const socialsTest = ['email', 'phone', 'GroupMe'];
+const ConnectedAccounts = () => {
+    const socialsTest = ["email", "phone", "GroupMe"];
     return (
         <div>
-            <h1 style={{ marginTop: '75px' }}>Connected Accounts</h1>
+            <h1 style={{ marginTop: "75px" }}>Connected Accounts</h1>
             <div>
                 <ul>
                     {socialsTest.map((social, index) => (
@@ -13,8 +13,7 @@ const ConnectedAccounts = ( { socials } ) => {
                 </ul>
             </div>
         </div>
-       
-    )
-}
+    );
+};
 
 export default ConnectedAccounts;
