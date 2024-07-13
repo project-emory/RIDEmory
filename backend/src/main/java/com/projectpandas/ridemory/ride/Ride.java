@@ -41,6 +41,7 @@ public class Ride {
     @JsonSerialize(using = ObjectIdListSerializer.class)
     private List<ObjectId> riders;
     /** See {@link riders}' security note */
+    @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId organizer;
 
     /** Default constructor for MongoDB */
@@ -58,7 +59,8 @@ public class Ride {
 
     public List<ObjectId> getRiders() {
         List<ObjectId> ridersCopy = new ArrayList<>(riders);
-        ridersCopy.add(organizer);
+        if (organizer != null)
+            ridersCopy.add(organizer);
         return ridersCopy;
     }
 
