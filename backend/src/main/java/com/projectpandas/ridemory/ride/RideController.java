@@ -42,7 +42,7 @@ public class RideController {
      */
     @GetMapping("/")
     public ResponseEntity<List<Ride>> searchRide(@RequestParam String from, @RequestParam String to,
-            @RequestParam(required = false) Float radius, @RequestParam(required = false) Integer space,
+            @RequestParam(required = false) Double radius, @RequestParam(required = false) Integer space,
             @RequestParam(required = false) Long time, @RequestParam(required = false) Boolean after) {
         List<Ride> rides = rideService.searchRides(from, to, radius, space, time, after);
         return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);

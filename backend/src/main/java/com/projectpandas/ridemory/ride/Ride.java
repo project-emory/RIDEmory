@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Document("rides")
+@CompoundIndexes({@CompoundIndex(name = "location_idx", def = "{'from': '2dsphere', 'to': '2dsphere'}"),
+        @CompoundIndex(name = "time_idx", def = "{'departTime': -1}")})
 @Data
 public class Ride {
     private static final Logger logger = LoggerFactory.getLogger(Ride.class);

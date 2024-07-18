@@ -1,11 +1,9 @@
 package com.projectpandas.ridemory.ride;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.geo.Distance;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -19,38 +17,56 @@ public interface RideRepository extends MongoRepository<Ride, ObjectId> {
 
     public Ride deleteRideById(String id);
 
-    // QUERY METHODS
-    @Query("{ 'fromString': ?0 }")
-    public List<Ride> getRidesByFrom(String fromString);
-
-    @Query("{ 'toString': ?0 }")
-    public List<Ride> getRidesByTo(String toString);
-
-    @Query("{ 'from': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
-    public List<Ride> getRidesNearUser(GeoJsonPoint userLocation, double maxDistance);
-
-    @Query("{ 'to': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
-    public List<Ride> getRidesNearDestination(GeoJsonPoint destineLocation, double maxDistance);
-
     /**
-     * Currently broken, as method doesn't filter `to` location - research
-     * aggregations? Requires radius in meters
+     * Searches for all rides by the specified filters. Difficult to explain, so
+     * refer to MongoDB's docs and your favorite LLM for more details; pipeline
+     * filters by from location, to location, how full a ride is, and finally by
+     * time. Since `$geoWithin` is in radians, radius needs to be divided by the
+     * radius of the earth in meters. For future maintainers: Look up SpEL.
+     * Thank me later.
+     *
+     * @param fromPoint from
+     * @param toPoint to
+     * @param radius radius in meters
+     * @param space minimum space on ride
+     * @param time time to search
+     * @param after if query should be for after the given time
+     * @return list of rides matching search
      */
-    @Query("""
-            { $and: [
-                { 'from': { $near: { $geometry: :#{#from}, $maxDistance: :#{#radius} } } },
-                { $expr: { $lte: [
+    @Aggregation(pipeline = {"""
+            { $geoNear: {
+                near: :#{#from},
+                key: 'from',
+                distanceField: 'distanceFrom',
+                maxDistance: :#{#radius},
+                spherical: true
+            }}
+            """, """
+            { $match : {
+                to: { $geoWithin: {
+                    $centerSphere: [
+                        :#{#to.getCoordinates()},
+                        :#{#radius / 6371000}
+                    ]
+                }}
+            }}
+            """, """
+            { $match : {
+                $expr: { $lte: [
                     :#{#space},
                     { $subtract: [5, { $add: [{ $size: '$riders' }, 1] }] }
-                ]}},
-                { $expr: { $cond: {
+                ]}
+            }}
+            """, """
+            { $match : {
+                $expr: { $cond: {
                     if: :#{#after},
                     then: { $gte: ['$departTime', :#{#time}] },
                     else: { $lte: ['$departTime', :#{#time}] }
-                }}}
-            ]}
-            """)
-    public List<Ride> getRidesTest(@Param("from") GeoJsonPoint fromPoint, @Param("to") GeoJsonPoint toPoint,
+                }}
+            }}
+            """})
+    public List<Ride> getRidesBy(@Param("from") GeoJsonPoint fromPoint, @Param("to") GeoJsonPoint toPoint,
             @Param("radius") double radius, @Param("space") int space, @Param("time") long time,
             @Param("after") boolean after);
 }

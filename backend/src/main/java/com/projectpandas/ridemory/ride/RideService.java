@@ -70,7 +70,7 @@ public class RideService {
      * @param after true if time is after, false if before (default true)
      * @return list of rides matching the filters
      */
-    public List<Ride> searchRides(String from, String to, Float radius, Integer space, Long time, Boolean after) {
+    public List<Ride> searchRides(String from, String to, Double radius, Integer space, Long time, Boolean after) {
         // TODO: add filter for size of ride
         GeoJsonPoint fromPoint = convertToPoint(from);
         GeoJsonPoint toPoint = convertToPoint(to);
@@ -84,7 +84,7 @@ public class RideService {
         time = time == null ? System.currentTimeMillis() / 1000L : time;
         after = after == null ? true : after;
 
-        return rideRepository.getRidesTest(fromPoint, toPoint, maxDistance.getValue() * 1000, space, time, after);
+        return rideRepository.getRidesBy(fromPoint, toPoint, maxDistance.getValue() * 1000, space, time, after);
     }
 
     /**
@@ -100,7 +100,7 @@ public class RideService {
             double lat = Double.parseDouble(coordinates[1].trim());
             return new GeoJsonPoint(lng, lat);
         } catch (Exception e) {
-            logger.error(source + " is an invalid coordinate format! Expected source to be `latitude,longitude` pair.",
+            logger.error(source + " is an invalid coordinate format! Expected source to be `longitude,latitude` pair.",
                     new IllegalArgumentException());
         }
 
