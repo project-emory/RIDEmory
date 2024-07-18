@@ -1,10 +1,12 @@
 package com.projectpandas.ridemory.ride;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.geo.Distance;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,14 +32,25 @@ public interface RideRepository extends MongoRepository<Ride, ObjectId> {
     @Query("{ 'to': { $near: { $geometry: ?0, $maxDistance: ?1 } } }")
     public List<Ride> getRidesNearDestination(GeoJsonPoint destineLocation, double maxDistance);
 
+    /**
+     * Currently broken, as method doesn't filter `to` location - research
+     * aggregations? Requires radius in meters
+     */
     @Query("""
-            {
-                'departTime': { $expr: { $cond: [?5, { $gte: ['$departTime', ?4] }, { $lte: ['$departTime', ?4] }] } },
-                $expr: { $lte: [{ $add: [{ $size: '$riders' }, 1] }, { $subtract: [5, ?3] }] },
-                'from': { $near: { $geometry: ?0, $maxDistance: ?2 } },
-                'to': { $near: { $geometry: ?1, $maxDistance: ?2 } }
-            }
+            { $and: [
+                { 'from': { $near: { $geometry: :#{#from}, $maxDistance: :#{#radius} } } },
+                { $expr: { $lte: [
+                    :#{#space},
+                    { $subtract: [5, { $add: [{ $size: '$riders' }, 1] }] }
+                ]}},
+                { $expr: { $cond: {
+                    if: :#{#after},
+                    then: { $gte: ['$departTime', :#{#time}] },
+                    else: { $lte: ['$departTime', :#{#time}] }
+                }}}
+            ]}
             """)
-    public List<Ride> getRidesByFilter(GeoJsonPoint fromPoint, GeoJsonPoint toPoint, double radius, int space,
-            long time, boolean after);
+    public List<Ride> getRidesTest(@Param("from") GeoJsonPoint fromPoint, @Param("to") GeoJsonPoint toPoint,
+            @Param("radius") double radius, @Param("space") int space, @Param("time") long time,
+            @Param("after") boolean after);
 }

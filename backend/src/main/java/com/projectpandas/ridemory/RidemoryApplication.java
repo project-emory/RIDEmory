@@ -20,8 +20,8 @@ public class RidemoryApplication implements CommandLineRunner {
         // Any test code can go here for now
         // Useful for pre-run processes
         if (rideRepository.count() == 0) {
-            // Auto-populate with 10 rides randomly
-            rideService.generateRides(10);
+            // Auto-populate with 25 rides randomly
+            rideService.generateRides(25);
         }
     }
 

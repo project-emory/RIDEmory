@@ -6,6 +6,8 @@ import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -62,21 +64,27 @@ public class RideService {
      *
      * @param from starting location in lat,lng format
      * @param to destination location in lat,lng format
-     * @param radius search radius in meters (default exact search)
+     * @param radius search radius in feet (default exact search)
      * @param space minimum number of available seats (default 1)
      * @param time time of departure in unix epoch time (default present)
      * @param after true if time is after, false if before (default true)
      * @return list of rides matching the filters
      */
     public List<Ride> searchRides(String from, String to, Float radius, Integer space, Long time, Boolean after) {
+        // TODO: add filter for size of ride
         GeoJsonPoint fromPoint = convertToPoint(from);
         GeoJsonPoint toPoint = convertToPoint(to);
-        radius = radius == null ? 0 : radius;
+
+        Distance maxDistance = radius == null
+                ? new Distance(0, Metrics.MILES)
+                : new Distance(radius / 5280, Metrics.MILES);
+        maxDistance = maxDistance.in(Metrics.KILOMETERS);
+
         space = space == null ? 1 : space;
         time = time == null ? System.currentTimeMillis() / 1000L : time;
         after = after == null ? true : after;
 
-        return rideRepository.getRidesByFilter(fromPoint, toPoint, radius, space, time, after);
+        return rideRepository.getRidesTest(fromPoint, toPoint, maxDistance.getValue() * 1000, space, time, after);
     }
 
     /**
