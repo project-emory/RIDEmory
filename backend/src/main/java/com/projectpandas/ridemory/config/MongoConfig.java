@@ -6,7 +6,8 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:/secrets.properties")
-public class DatabaseProperties {
+public class MongoConfig {
+    // public class MongoConfig extends AbstractMongoClientConfiguration {
     @Value("${spring.data.mongodb.database}")
     private String dbName;
 }
