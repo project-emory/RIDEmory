@@ -39,7 +39,6 @@ public class User {
 
     /**
      * Creates a new user with the given email. Intended for use with user sign-up.
-     * sign-up.
      *
      * @param email user's Emory email
      */
@@ -70,5 +69,10 @@ public class User {
 
     public static boolean isEmoryEmail(String email) {
         return email != null && email.matches("^([a-z\\-]+)[.]([a-z\\-]+)[0-9]*@emory[.]edu$");
+    }
+
+    @Override
+    public String toString() {
+        return "User-" + id.toHexString();
     }
 }

@@ -60,7 +60,7 @@ public class RideService {
     }
 
     /**
-     * Search for rides matching the given filters
+     * Search for rides matching the given filters.
      *
      * @param from starting location in lat,lng format
      * @param to destination location in lat,lng format
@@ -87,7 +87,7 @@ public class RideService {
     }
 
     /**
-     * Convert a string to a GeoJsonPoint
+     * Convert a string to a GeoJsonPoint.
      *
      * @param source string to convert in lat,lng format
      * @return GeoJsonPoint

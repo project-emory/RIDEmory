@@ -61,6 +61,11 @@ public class Ride {
         this.departTime = System.currentTimeMillis() / 1000L;
     }
 
+    /**
+     * Fetch a list of all riders.
+     *
+     * @return all riders' ids, including the organizer
+     */
     public List<ObjectId> getRiders() {
         List<ObjectId> ridersCopy = new ArrayList<>(riders);
         if (organizer != null)
@@ -68,12 +73,18 @@ public class Ride {
         return ridersCopy;
     }
 
-    public List<ObjectId> joinRide(User rider) {
+    /**
+     * Add a user to the ride.
+     *
+     * @param rider rider to add; rider cannot be in ride, and ride must have space
+     * @return all riders' ids, or null if failed
+     */
+    public List<ObjectId> addRider(User rider) {
         if (riders.contains(rider.getId())) {
-            logger.warn("User {} tried to join {} twice", rider, this);
+            logger.warn("{} is already in {}.", rider, this);
             return null;
-        } else if (this.getRiders().size() >= 6) {
-            logger.warn("{} at XL capacity and cannot take {}.", this, rider);
+        } else if (getRiders().size() >= 6) {
+            logger.warn("{} is at XL capacity and cannot take {}.", this, rider);
             return null;
         }
 
@@ -81,18 +92,58 @@ public class Ride {
         return getRiders();
     }
 
-    public List<ObjectId> leaveRide(User rider) {
-        if (!riders.remove(rider.getId())) {
-            logger.warn("User {} tried to leave {} but was not in it", rider, this);
+    /**
+     * Remove a user from the ride.
+     *
+     * @param rider rider to remove; rider must exist in ride, and rider must not be
+     * @return all remaining riders' ids, or null if failed.
+     */
+    public List<ObjectId> removeRider(User rider) {
+        if (rider.getId().equals(organizer)) {
+            logger.warn("{} is {}'s organizer.", rider, this);
+            return null;
+        } else if (!riders.remove(rider.getId())) {
+            logger.warn("{} is not in {}.", rider, this);
+            return null;
         }
 
         return getRiders();
     }
 
+    /**
+     * Transfer organizer status.
+     *
+     * @param rider rider to make organizer
+     * @return new organizer's id, or null if failed.
+     */
+    public ObjectId transferOrganizer(User rider) {
+        if (rider.getId().equals(organizer)) {
+            logger.warn("{} is already {}'s organizer.", rider, this);
+            return null;
+        } else if (!riders.remove(rider.getId())) {
+            logger.warn("{} is not in {}.", rider, this);
+            return null;
+        }
+
+        riders.add(organizer);
+        organizer = rider.getId();
+        return organizer;
+    }
+
+    /**
+     * Get the `to` location.
+     *
+     * @return the `to` location
+     */
     public Location getTo() {
         return Location.fromPoint(to);
     }
 
+    /**
+     * Get the `from` location.
+     *
+     * @return the `from` location
+     */
     public Location getFrom() {
         return Location.fromPoint(from);
     }
