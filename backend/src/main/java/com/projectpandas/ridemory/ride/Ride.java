@@ -71,10 +71,13 @@ public class Ride {
     public List<ObjectId> joinRide(User rider) {
         if (riders.contains(rider.getId())) {
             logger.warn("User {} tried to join {} twice", rider, this);
-        } else {
-            riders.add(rider.getId());
+            return null;
+        } else if (this.getRiders().size() >= 6) {
+            logger.warn("{} at XL capacity and cannot take {}.", this, rider);
+            return null;
         }
 
+        riders.add(rider.getId());
         return getRiders();
     }
 

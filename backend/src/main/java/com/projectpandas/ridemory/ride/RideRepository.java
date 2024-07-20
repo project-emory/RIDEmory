@@ -22,8 +22,8 @@ public interface RideRepository extends MongoRepository<Ride, ObjectId> {
      * refer to MongoDB's docs and your favorite LLM for more details; pipeline
      * filters by from location, to location, how full a ride is, and finally by
      * time. Since `$geoWithin` is in radians, radius needs to be divided by the
-     * radius of the earth in meters. For future maintainers: Look up SpEL.
-     * Thank me later.
+     * radius of the earth in meters. For future maintainers: Look up SpEL. Thank me
+     * later.
      *
      * @param fromPoint from
      * @param toPoint to
@@ -54,7 +54,7 @@ public interface RideRepository extends MongoRepository<Ride, ObjectId> {
             { $match : {
                 $expr: { $lte: [
                     :#{#space},
-                    { $subtract: [5, { $add: [{ $size: '$riders' }, 1] }] }
+                    { $subtract: [6, { $add: [{ $size: '$riders' }, 1] }] }
                 ]}
             }}
             """, """

@@ -71,7 +71,6 @@ public class RideService {
      * @return list of rides matching the filters
      */
     public List<Ride> searchRides(String from, String to, Double radius, Integer space, Long time, Boolean after) {
-        // TODO: add filter for size of ride
         GeoJsonPoint fromPoint = convertToPoint(from);
         GeoJsonPoint toPoint = convertToPoint(to);
 
