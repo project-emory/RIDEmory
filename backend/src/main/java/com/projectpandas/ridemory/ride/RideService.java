@@ -27,6 +27,13 @@ public class RideService {
         return ride;
     }
 
+    /**
+     * Helper method to generate some random rides. Should not be called in a
+     * production context!
+     *
+     * @param quantity the amount of rides to generate
+     * @return a list of generated rides.
+     */
     public List<Ride> generateRides(int quantity) {
         Location[] locations = Location.values;
         List<Ride> generatedRides = new ArrayList<>();
@@ -43,10 +50,6 @@ public class RideService {
         return generatedRides;
     }
 
-    public List<Ride> getRideRepository() {
-        return rideRepository.listRides(0, 10);
-    }
-
     public Ride getRide(ObjectId id) {
         return rideRepository.findById(id).orElse(null);
     }
@@ -55,6 +58,10 @@ public class RideService {
         return rideRepository.deleteRideById(id);
     }
 
+    /**
+     * Helper method to delete all rides in a repository. If this is called in a
+     * production context, we screwed up :)
+     */
     public void deleteAll() {
         rideRepository.deleteAll();
     }

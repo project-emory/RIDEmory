@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/rides")
 public class RideController {
     @Autowired
-    RideRepository rideRepository;
-    @Autowired
     RideService rideService;
 
     /**
