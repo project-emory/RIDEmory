@@ -81,6 +81,10 @@ public class RideService {
         GeoJsonPoint fromPoint = convertToPoint(from);
         GeoJsonPoint toPoint = convertToPoint(to);
 
+        if (fromPoint == null || toPoint == null) {
+            return null;
+        }
+
         Distance maxDistance = radius == null
                 ? new Distance(0, Metrics.MILES)
                 : new Distance(radius / 5280, Metrics.MILES);
@@ -106,8 +110,7 @@ public class RideService {
             double lat = Double.parseDouble(coordinates[1].trim());
             return new GeoJsonPoint(lng, lat);
         } catch (Exception e) {
-            logger.error(source + " is an invalid coordinate format! Expected source to be `longitude,latitude` pair.",
-                    new IllegalArgumentException());
+            logger.warn("{} is an invalid coordinate format! Expected source to be `longitude,latitude` pair.", source);
         }
 
         return null;
