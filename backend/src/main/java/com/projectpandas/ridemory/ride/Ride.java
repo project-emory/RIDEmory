@@ -44,7 +44,7 @@ public class Ride {
      */
     @JsonSerialize(using = ObjectIdListSerializer.class)
     private List<ObjectId> riders;
-    /** See {@link riders}' security note */
+    /** See {@link #riders}' security note */
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId organizer;
 
