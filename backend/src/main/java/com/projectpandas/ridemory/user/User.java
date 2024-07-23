@@ -38,14 +38,14 @@ public class User {
     }
 
     /**
-     * Creates a new user with an email. Default constructor, use
-     * {@link #createNew} to call this constructor.
+     * Creates a new user with an email. Default constructor, use {@link #createNew}
+     * to call this constructor.
      *
-     * @param email user's Emory email - see {@link #createNew} for
-     *     preprocessing
+     * @param email user's Emory email - see {@link #createNew} for preprocessing
      */
     private User(String email) {
         this.firstName = email.split("[.]")[0];
+        this.firstName = this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1);
         this.email = email;
         this.verified = false;
         this.phone = null;
