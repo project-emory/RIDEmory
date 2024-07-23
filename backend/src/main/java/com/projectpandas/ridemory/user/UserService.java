@@ -1,11 +1,13 @@
 package com.projectpandas.ridemory.user;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projectpandas.ridemory.util.dto.EmailDto;
+import com.projectpandas.ridemory.util.dto.UserUpdateDto;
 
 @Service
 public class UserService {
@@ -28,5 +30,21 @@ public class UserService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+     * Update a user profile. Not entirely complete, but lays the framework for
+     * future updates.
+     *
+     * @param userUpdates updates to the user
+     * @return updated user
+     */
+    public User updateUser(String id, UserUpdateDto userUpdates) {
+        User user = userRepository.getUserById(new ObjectId(id));
+        if (userUpdates.getFirstName() != null)
+            user.setFirstName(userUpdates.getFirstName());
+
+        userRepository.save(user);
+        return user;
     }
 }
