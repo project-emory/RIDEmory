@@ -59,14 +59,6 @@ public class RideService {
     }
 
     /**
-     * Helper method to delete all rides in a repository. If this is called in a
-     * production context, we screwed up :)
-     */
-    public void deleteAll() {
-        rideRepository.deleteAll();
-    }
-
-    /**
      * Search for rides matching the given filters.
      *
      * @param from starting location in lat,lng format
