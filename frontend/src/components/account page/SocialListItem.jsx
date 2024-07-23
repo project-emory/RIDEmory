@@ -1,4 +1,4 @@
-import "../SocialListItem.css";
+import "./SocialListItem.css";
 
 const SocialListItem = ({ social }) => {
     function deleteSocial() {

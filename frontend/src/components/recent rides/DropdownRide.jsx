@@ -17,7 +17,7 @@ const DropdownRide = () => {
         <div className="container">
             <div className="top-container">
                 <div className="heading">
-                    <h1>Rides</h1>
+                    <h2 style={{ fontWeight: "800" }}>Rides</h2>
                     <button>
                         Sort by{" "}
                         <span style={{ marginLeft: "5px", fontSize: "10px" }}>
