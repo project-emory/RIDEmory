@@ -1,13 +1,13 @@
-import ConnectedAccounts from "../components/ConnectedAccounts.jsx";
+import ConnectedAccounts from "../components/account page/ConnectedAccounts.jsx";
 import NavBar from "../components/NavBar";
-import RecentRides from "../components/RecentRides.jsx";
-import UserProfile from "../components/UserProfile.jsx";
+import RecentRides from "../components/recent rides/RecentRides.jsx";
+import UserProfile from "../components/account page/UserProfile.jsx";
 import "./Account.css";
 
 const Account = () => {
     return (
         <>
-            <NavBar />
+            <NavBar isSignedIn={true} />
             <br />
 
             <div className="content-container">

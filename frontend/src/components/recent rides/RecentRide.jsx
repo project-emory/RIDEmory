@@ -1,4 +1,4 @@
-import "./../RecentRide.css";
+import "./RecentRide.css";
 
 const RecentRide = ({ ride }) => {
     return (

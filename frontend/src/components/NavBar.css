@@ -34,3 +34,16 @@ button {
     font-family: "Karla";
     border-color: black;
 }
+
+.login-button {
+    border-style: none;
+    border-radius: 20px;
+    background-color: #013a63;
+    padding: 8px 30px 8px 30px;
+    color: white;
+}
+
+.signed-out {
+    /* background: linear-gradient(to right, #a9d6e5 55%, white 55%); */
+    background: linear-gradient(to right, #a9d6e5 55%, white 59%);
+}

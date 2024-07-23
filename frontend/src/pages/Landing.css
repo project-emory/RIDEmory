@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling */
+    position: relative;
+}
+
+.signup-text {
+    border-style: none;
+    color: blue;
+    white-space: nowrap;
+    text-decoration: underline;
+}
+
+.navigation {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.center-vertical {
+    position: absolute;
+    top: 50%;
+    width: 33%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+}
+
+.gradient-background {
+    background: linear-gradient(to right, #a9d6e5 50%, white 50%);
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling */
+    position: relative;
+}
+
+.center-vertical {
+    position: absolute;
+    top: 50%;
+    width: 33%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+}
+
+.signup-text {
+    border-style: none;
+    color: blue;
+    white-space: nowrap;
+    text-decoration: underline;
+}

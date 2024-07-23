@@ -1,9 +1,9 @@
 import NavBar from "../components/NavBar";
 
-const About = () => {
+const About = ({ isSignedIn }) => {
     return (
         <>
-            <NavBar />
+            <NavBar isSignedIn={isSignedIn} />
             <h1>About</h1>
         </>
     );
