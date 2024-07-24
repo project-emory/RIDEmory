@@ -9,4 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 public class APIKeys {
     @Value("${google.api.key}")
     public static String googleAPIKey;
+
+    @Value("{firebase.api.key}")
+    public static String firebaseAPIKey;
 }
