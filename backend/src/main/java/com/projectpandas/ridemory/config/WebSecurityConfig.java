@@ -22,8 +22,8 @@ public class WebSecurityConfig {
         logger.info("Connecting security filter chain.");
         // TODO: properly figure out csrf so that our application is safer
         // for now this needs to be disabled for postman testing
-        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(requests -> requests.requestMatchers("/signin")
-                .permitAll().requestMatchers(HttpMethod.POST, "/signup").permitAll().anyRequest().authenticated());
+        http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(requests -> requests.requestMatchers("/api/auth")
+                .permitAll().requestMatchers(HttpMethod.POST, "/api/users").permitAll().anyRequest().authenticated());
 
         http.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
 
