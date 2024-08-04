@@ -16,19 +16,19 @@ public class RideController {
     RideService rideService;
 
     /**
-     * Create a ride
+     * Create a ride.
      *
      * @param ride ride object to create
      * @return created ride
      */
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Ride> createRide(@RequestBody Ride ride) {
         Ride result = rideService.createRide(ride);
         return result == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(result);
     }
 
     /**
-     * Search for rides matching the given filters
+     * Search for rides matching the given filters.
      *
      * @param from starting location in lat,lng format
      * @param to destination location in lat,lng format
@@ -38,12 +38,12 @@ public class RideController {
      * @param after true if time is after, false if before
      * @return list of rides matching filters
      */
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Ride>> searchRide(@RequestParam String from, @RequestParam String to,
             @RequestParam(required = false) Double radius, @RequestParam(required = false) Integer space,
             @RequestParam(required = false) Long time, @RequestParam(required = false) Boolean after) {
         List<Ride> rides = rideService.searchRides(from, to, radius, space, time, after);
-        return rides == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(rides);
+        return rides == null ? ResponseEntity.badRequest().build() : ResponseEntity.ok(rides);
     }
 
     @GetMapping("/{id}")

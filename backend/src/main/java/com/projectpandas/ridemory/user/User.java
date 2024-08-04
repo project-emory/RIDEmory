@@ -38,21 +38,36 @@ public class User {
     }
 
     /**
-     * Creates a new user with the given email. Intended for use with user sign-up.
+     * Creates a new user with an email. Default constructor, use {@link #createNew}
+     * to call this constructor.
      *
-     * @param email user's Emory email
+     * @param email user's Emory email - see {@link #createNew} for preprocessing
      */
-    public User(String email) {
-        email = email.toLowerCase();
-        if (!isEmoryEmail(email))
-            logger.error("Invalid email", new IllegalArgumentException());
-
+    private User(String email) {
         this.firstName = email.split("[.]")[0];
+        this.firstName = this.firstName.substring(0, 1).toUpperCase() + this.firstName.substring(1);
         this.email = email;
         this.verified = false;
         this.phone = null;
         this.groupMeId = null;
         this.rides = new ArrayList<>();
+    }
+
+    /**
+     * Factory method wrapping new user logic with preprocessing and checks.
+     *
+     * @param email unchecked email - email should be `first.last@emory.edu`
+     * @return new user
+     */
+    public static User createNew(String email) {
+        email = email.toLowerCase();
+
+        if (isEmoryEmail(email)) {
+            return new User(email);
+        }
+
+        logger.warn("{} is an invalid email.", email);
+        return null;
     }
 
     public void setName(String name) {
