@@ -1,129 +1,155 @@
 package com.projectpandas.ridemory.ride;
 
 import lombok.Data;
+
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectpandas.ridemory.user.User;
+import com.projectpandas.ridemory.util.ObjectIdListSerializer;
+import com.projectpandas.ridemory.util.ObjectIdSerializer;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Document("rides")
+@CompoundIndexes({@CompoundIndex(name = "location_idx", def = "{'from': '2dsphere', 'to': '2dsphere'}"),
+        @CompoundIndex(name = "time_idx", def = "{'departTime': -1}")})
 @Data
 public class Ride {
+    private static final Logger logger = LoggerFactory.getLogger(Ride.class);
 
     @Id
-    private String id;
-
-    private String messageID;
-    private int riders = 1;
-    private long departTime;
-    private String fromString;
-    private String toString;
-
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId id;
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint to;
-
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private GeoJsonPoint from;
+    private long departTime;
 
+    /**
+     * Needs to be ignored or serialized to be just count/anonymized users for
+     * security reasons, maybe add custom JsonSerializer that converts to anonymous
+     * name. Does NOT include organizer
+     */
+    @JsonSerialize(using = ObjectIdListSerializer.class)
+    private List<ObjectId> riders;
+    /** See {@link #riders}' security note */
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId organizer;
+
+    /** Default constructor for MongoDB */
     public Ride() {
-        id = "test";
-        messageID = "test";
-        to = Locations.NORTH_PARKWAY.getPoint();
-        from = Locations.ATL.getPoint();
-        riders = 1;
-        departTime = now();
+        super();
     }
 
-    public Ride(String id, String messageID) {
-        this.id = id;
-        this.messageID = messageID;
-        riders = 1;
-        departTime = now();
-        to = Locations.NORTH_PARKWAY.getPoint();
-        from = Locations.ATL.getPoint();
-    }
-
-    public Ride(String id,
-            String messageID,
-            GeoJsonPoint to,
-            GeoJsonPoint from) {
-        this.id = id;
-        this.messageID = messageID;
-        this.to = to;
-        this.from = from;
-        this.departTime = now();
-    }
-
-    public Ride(String id,
-            String messageID,
-            GeoJsonPoint to,
-            GeoJsonPoint from,
-            long departTime) {
-        this.id = id;
-        this.messageID = messageID;
-        this.to = to;
-        this.from = from;
-        this.departTime = departTime;
-    }
-
-    public Ride(String id,
-            String messageID,
-            GeoJsonPoint to,
-            GeoJsonPoint from,
-            String toString,
-            String fromString,
-            int riders) {
-        this.id = id;
-        this.messageID = messageID;
-        this.to = to;
-        this.from = from;
-        this.toString = toString;
-        this.fromString = fromString;
-        this.riders = riders;
-        this.departTime = now();
+    public Ride(User organizer, Location to, Location from) {
+        this.to = to.getPoint();
+        this.from = from.getPoint();
+        this.riders = new ArrayList<>();
+        this.organizer = organizer.getId();
+        this.departTime = System.currentTimeMillis() / 1000L;
     }
 
     /**
-     * @return current unix epoch time
+     * Fetch a list of all riders.
+     *
+     * @return all riders' ids, including the organizer
      */
-    public static long now() {
-        return System.currentTimeMillis() / 1000L; // get current unix epoch time
+    public List<ObjectId> getRiders() {
+        List<ObjectId> ridersCopy = new ArrayList<>(riders);
+        if (organizer != null)
+            ridersCopy.add(organizer);
+        return ridersCopy;
     }
 
-    public void addRider() {
-        riders++;
-    }
-
-    public void removeRider() {
-        if (riders > 0) {
-            riders--;
+    /**
+     * Add a user to the ride.
+     *
+     * @param rider rider to add; rider cannot be in ride, and ride must have space
+     * @return all riders' ids, or null if failed
+     */
+    public List<ObjectId> addRider(User rider) {
+        if (riders.contains(rider.getId())) {
+            logger.warn("{} is already in {}.", rider, this);
+            return null;
+        } else if (getRiders().size() >= 6) {
+            logger.warn("{} is at XL capacity and cannot take {}.", this, rider);
+            return null;
         }
+
+        riders.add(rider.getId());
+        return getRiders();
     }
 
-    public GeoJsonPoint getDestination() {
-        return to;
+    /**
+     * Remove a user from the ride.
+     *
+     * @param rider rider to remove; rider must exist in ride, and rider must not be
+     * @return all remaining riders' ids, or null if failed.
+     */
+    public List<ObjectId> removeRider(User rider) {
+        if (rider.getId().equals(organizer)) {
+            logger.warn("{} is {}'s organizer.", rider, this);
+            return null;
+        } else if (!riders.remove(rider.getId())) {
+            logger.warn("{} is not in {}.", rider, this);
+            return null;
+        }
+
+        return getRiders();
     }
 
-    public GeoJsonPoint getOrigin() {
-        return from;
+    /**
+     * Transfer organizer status.
+     *
+     * @param rider rider to make organizer
+     * @return new organizer's id, or null if failed.
+     */
+    public ObjectId transferOrganizer(User rider) {
+        if (rider.getId().equals(organizer)) {
+            logger.warn("{} is already {}'s organizer.", rider, this);
+            return null;
+        } else if (!riders.remove(rider.getId())) {
+            logger.warn("{} is not in {}.", rider, this);
+            return null;
+        }
+
+        riders.add(organizer);
+        organizer = rider.getId();
+        return organizer;
     }
 
-    public List<Double> getTo() {
-        return to.getCoordinates();
+    /**
+     * Get the `to` location.
+     *
+     * @return the `to` location
+     */
+    public Location getTo() {
+        return Location.fromPoint(to);
     }
 
-    public List<Double> getFrom() {
-        return from.getCoordinates();
+    /**
+     * Get the `from` location.
+     *
+     * @return the `from` location
+     */
+    public Location getFrom() {
+        return Location.fromPoint(from);
     }
 
     @Override
     public String toString() {
-        return "{\"id\": \"%s\", \"messageId\": \"%s\", \"to\": %s, \"from\": %s, \"riders\": %s, \"departTime\": %s}"
-                .formatted(
-                        id, messageID, to, from, riders, departTime);
+        return "Ride-" + id.toHexString();
     }
-
 }

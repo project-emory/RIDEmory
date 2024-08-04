@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 5vw;   
+    padding: 30px 5vw;
     height: 40px;
     background-color: white;
 }
@@ -23,7 +23,7 @@ a {
     text-decoration: none;
 }
 
-button{
+button {
     width: 150px;
     padding: 10px 0px;
     border-radius: 30px;
@@ -33,4 +33,17 @@ button{
     border-style: solid;
     font-family: "Karla";
     border-color: black;
+}
+
+.login-button {
+    border-style: none;
+    border-radius: 20px;
+    background-color: #013a63;
+    padding: 8px 30px 8px 30px;
+    color: white;
+}
+
+.signed-out {
+    /* background: linear-gradient(to right, #a9d6e5 55%, white 55%); */
+    background: linear-gradient(to right, #a9d6e5 55%, white 59%);
 }

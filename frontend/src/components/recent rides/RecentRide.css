@@ -1,0 +1,27 @@
+.ride-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    height: 40px;
+}
+
+.ride-info {
+    flex: 1;
+}
+
+.ride-details {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.ride-details img {
+    width: 20px;
+    height: 20px;
+}
+
+.ride-details p {
+    text-align: right;
+    margin-left: 25px;
+}

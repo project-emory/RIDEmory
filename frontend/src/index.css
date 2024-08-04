@@ -1,47 +1,48 @@
 @import url("https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
-  --brand-primary: #013a63;
-  --brand-secondary: #2a6f97;
-  --brand-tertiary: #a9d6e5;
+    --brand-primary: #013a63;
+    --brand-secondary: #2a6f97;
+    --brand-tertiary: #a9d6e5;
 
-  --neutral-primary: #fff;
-  --neutral-secondary: #f3f3f3;
-  --neutral-tertiary: #e5e5e5;
+    --neutral-primary: #fff;
+    --neutral-secondary: #f3f3f3;
+    --neutral-tertiary: #e5e5e5;
 
-  --communication-warning: #e3db24;
-  --communication-danger: #e31d1d;
+    --communication-warning: #e3db24;
+    --communication-danger: #e31d1d;
 }
 
 h1 {
-  font-family: "Open Sans";
-  font-size: 35px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
+    font-family: "Open Sans";
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
 }
 
 h2 {
-  font-family: "Open Sans";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+    font-family: "Open Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
-p, b {
-  font-family: "Karla";
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
+p,
+b {
+    font-family: "Karla";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 b {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 body {
-  padding: 0px;
-  margin: 0px;
+    padding: 0px;
+    margin: 0px;
 }

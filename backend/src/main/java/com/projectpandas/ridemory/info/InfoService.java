@@ -1,6 +1,7 @@
 package com.projectpandas.ridemory.info;
 
 import com.projectpandas.ridemory.config.APIKeys;
+import com.projectpandas.ridemory.ride.Location;
 import com.projectpandas.ridemory.ride.Ride;
 
 import org.jsoup.Jsoup;
@@ -13,22 +14,19 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class InfoService {
-
     // TODO:
     // Traffic times
     // Uber/Lyft price estimates
     // Transloc
     // DONE:
     // ATL TSA wait times
-
     public final HttpClient client;
     public static final String TSAWaitTimeAPI = "https://www.atl.com/times/";
-    public static final String[] checkpoints = { "MAIN", "NORTH", "LOWER NORTH", "SOUTH", "INT'L" };
+    public static final String[] checkpoints = {"MAIN", "NORTH", "LOWER NORTH", "SOUTH", "INT'L"};
     private static final String GoogleMapAPIKEY = APIKeys.googleAPIKey;
 
     // @Autowired
@@ -47,7 +45,8 @@ public class InfoService {
     }
 
     public Map<String, Integer> getATLWaitTime() {
-        // hard coded, since scraping directly from www.atl.com is specific to ATL
+        // hard coded, since scraping directly from www.atl.com is specific to
+        // ATL
         // airport
         // will need to use some other api for general wait times
 
@@ -70,17 +69,14 @@ public class InfoService {
     }
 
     public String getTrafficTimeEstimate(Ride ride) {
-        List<Double> origin = ride.getTo();
-        List<Double> destination = ride.getFrom();
+        Location origin = ride.getTo();
+        Location destination = ride.getFrom();
         // GeoJsonPoint origin=ride.getOrigin();
         // GeoJsonPoint destination=ride.getDestination();
         try {
-            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-                    + "origins=" + origin.get(0) + "," + origin.get(1)
-                    + "&destinations=" + destination.get(0) + "," + destination.get(1)
-                    + "&departure_time=now"
-                    + "&traffic_model=best_guess"
-                    + "&key=" + GoogleMapAPIKEY;
+            String url = "https://maps.googleapis.com/maps/api/distancematrix/json?" + "origins=" + origin.getLat()
+                    + "," + origin.getLon() + "&destinations=" + destination.getLat() + "," + destination.getLon()
+                    + "&departure_time=now" + "&traffic_model=best_guess" + "&key=" + GoogleMapAPIKEY;
 
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).GET().build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -96,5 +92,4 @@ public class InfoService {
             return null;
         }
     }
-
 }
