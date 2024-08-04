@@ -59,14 +59,6 @@ public class RideService {
     }
 
     /**
-     * Helper method to delete all rides in a repository. If this is called in a
-     * production context, we screwed up :)
-     */
-    public void deleteAll() {
-        rideRepository.deleteAll();
-    }
-
-    /**
      * Search for rides matching the given filters.
      *
      * @param from starting location in lat,lng format
@@ -80,6 +72,10 @@ public class RideService {
     public List<Ride> searchRides(String from, String to, Double radius, Integer space, Long time, Boolean after) {
         GeoJsonPoint fromPoint = convertToPoint(from);
         GeoJsonPoint toPoint = convertToPoint(to);
+
+        if (fromPoint == null || toPoint == null) {
+            return null;
+        }
 
         Distance maxDistance = radius == null
                 ? new Distance(0, Metrics.MILES)
@@ -106,8 +102,7 @@ public class RideService {
             double lat = Double.parseDouble(coordinates[1].trim());
             return new GeoJsonPoint(lng, lat);
         } catch (Exception e) {
-            logger.error(source + " is an invalid coordinate format! Expected source to be `longitude,latitude` pair.",
-                    new IllegalArgumentException());
+            logger.warn("{} is an invalid coordinate format! Expected source to be `longitude,latitude` pair.", source);
         }
 
         return null;
